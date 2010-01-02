@@ -156,6 +156,8 @@ void GameView::shufflePieces()
     emptyPlace_ = pieces_.at(hiddenPiece)->currentPlace();
     pieces_.at(hiddenPiece)->hide();
     hiddenIndex_ = hiddenPiece;
+
+    setMovingPieces();
 }
 
 QPointF GameView::emptyPlace()
