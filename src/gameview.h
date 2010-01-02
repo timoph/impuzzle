@@ -23,6 +23,7 @@
 
 class GraphicsScene;
 class PuzzleItem;
+class IntroItem;
 
 class GameView : public QGraphicsView
 {
@@ -34,6 +35,7 @@ public:
     QPointF emptyPlace();
     void setEmptyPlace(const QPointF &place);
     bool areAllPiecesOk() const;
+    void setMovingPieces();
 
 public slots:
     void setPieces(const QList<PuzzleItem *> pieces);
@@ -47,5 +49,9 @@ private:
     QList<PuzzleItem *> pieces_;
     QPointF emptyPlace_;
     int hiddenIndex_;
+    IntroItem *introItem_;
+
+    int verticalStep_;
+    int horizontalStep_;
 };
 #endif

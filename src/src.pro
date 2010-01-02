@@ -10,11 +10,15 @@ HEADERS += gameview.h \
     imageimporter.h \
     puzzleitem.h \
     newgamedialog.h \
-    defines.h
+    defines.h \
+    introitem.h
+
 SOURCES += gameview.cpp \
     main.cpp \
     mainwindow.cpp \
     imageimporter.cpp \
     puzzleitem.cpp \
-    newgamedialog.cpp
+    newgamedialog.cpp \
+    introitem.cpp
+
 RESOURCES += resources.qrc

@@ -19,6 +19,7 @@
 #include "gameview.h"
 #include "puzzleitem.h"
 #include "defines.h"
+#include "introitem.h"
 
 #include <QGraphicsScene>
 #include <QDateTime>
@@ -26,6 +27,7 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include <QFont>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -37,6 +39,13 @@ GameView::GameView(QWidget *parent) :
     scene_ = new QGraphicsScene;
     hiddenIndex_ = -1;
     setScene(scene_);
+
+    introItem_ = new IntroItem;
+    introItem_->setText("Select new game from menu to play");
+    scene_->addItem(introItem_);
+
+    verticalStep_ = 0;
+    horizontalStep_ = 0;
 
     qsrand(QDateTime::currentDateTime().toTime_t());
 }
@@ -87,8 +96,8 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces)
     }
 
     int verticalCount = pieces_.count() / horizontalCount;
-    int horizontalStep = IMAGE_WIDTH / horizontalCount + 5;
-    int verticalStep = IMAGE_HEIGHT / verticalCount + 5;
+    horizontalStep_ = IMAGE_WIDTH / horizontalCount + 5;
+    verticalStep_ = IMAGE_HEIGHT / verticalCount + 5;
 
     int pieceNumber = 0;
 
@@ -96,7 +105,7 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces)
     for(int i = 0; i < verticalCount; ++i) {
         for(int j = 0; j < horizontalCount; ++j) {
             scene_->addItem(pieces_.at(pieceNumber));
-            QPointF point(j * horizontalStep, i * verticalStep);
+            QPointF point(j * horizontalStep_, i * verticalStep_);
             pieces_.at(pieceNumber)->setPos(point);
             pieces_.at(pieceNumber)->setCorrectPlace(point);
             pieces_.at(pieceNumber)->setCurrentPlace(point);
@@ -105,7 +114,7 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces)
     }
 
     // Wait a second
-    QTimer::singleShot(1000, this, SLOT(shufflePieces()));
+    QTimer::singleShot(750, this, SLOT(shufflePieces()));
 }
 
 void GameView::shufflePieces()
@@ -115,8 +124,8 @@ void GameView::shufflePieces()
         return;
     }
 
-    // TODO Give pieces ramdom locations
-    int rounds = 5;
+    // Give pieces ramdom locations
+    int rounds = 5; //TODO
     for(int j = 0; j < rounds; ++j) {
         for(int i = 0; i < pieces_.count(); ++i) {
             QPointF tmp;
@@ -162,19 +171,64 @@ void GameView::setEmptyPlace(const QPointF &place)
 bool GameView::areAllPiecesOk() const
 {
     for(int i = 0; i < pieces_.count(); ++i) {
+        // Skip hidden piece
         if(i == hiddenIndex_) {
             continue;
         }
+        // Id piece is not in it's place
         else if(pieces_.at(i)->correctPlace() != pieces_.at(i)->currentPlace()) {
             return false;
         }
     }
+    // Show hidden piece and move it to it's place
     pieces_.at(hiddenIndex_)->show();
     pieces_.at(hiddenIndex_)->moveMeTo(emptyPlace_);
 
+    // Set all pieces not movable
     for(int i = 0; i < pieces_.count(); ++i) {
         pieces_.at(i)->setMovable(false);
     }
 
+    // Show dialog with move count
+    QMessageBox::about(const_cast<GameView *>(this), tr("You won"), QString("Puzzle completed with %1 moves").arg(PuzzleItem::moveCount()));
+
     return true;
+}
+
+void GameView::setMovingPieces()
+{
+    if(pieces_.isEmpty()) {
+        qDebug() << "Empty list @ GameView::setMovingPieces";
+        return;
+    }
+
+    QPointF point = QPointF();
+    for(int i = 0; i < pieces_.count(); ++i) {
+        point = pieces_.at(i)->currentPlace();
+
+        // Is piece on the left side of the empty space
+        if(emptyPlace_.y() == point.y() && point.x() + horizontalStep_ == emptyPlace_.x()) {
+            pieces_.at(i)->setMovable(true);
+        }
+
+        // Is piece on the right side of the empty space
+        else if(emptyPlace_.y() == point.y() && point.x() - horizontalStep_ == emptyPlace_.x()) {
+            pieces_.at(i)->setMovable(true);
+        }
+
+        // Is piece below the empty space
+        else if(emptyPlace_.x() == point.x() && point.y() - verticalStep_ == emptyPlace_.y()) {
+            pieces_.at(i)->setMovable(true);
+        }
+
+        // Is piece on top of the empty space
+        else if(emptyPlace_.x() == point.x() && point.y() + verticalStep_ == emptyPlace_.y()) {
+            pieces_.at(i)->setMovable(true);
+        }
+
+        // The piece is somewhere else
+        else {
+            pieces_.at(i)->setMovable(false);
+        }
+    }
 }
