@@ -1,0 +1,7 @@
+impuzzle (0.1-1maemo0) unstable; urgency=low
+
+  * Implemented: Basic gameplay
+  * Initial debian packaging
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sat, 2 Jan 2010 10:12:49 +0200
+
