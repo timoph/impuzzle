@@ -22,3 +22,10 @@ SOURCES += gameview.cpp \
     introitem.cpp
 
 RESOURCES += resources.qrc
+
+desktop.files += impuzzle.desktop
+desktop.path = /usr/share/applications/hildon/
+
+target.path = /opt/impuzzle/
+
+INSTALLS += target desktop

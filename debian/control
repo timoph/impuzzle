@@ -1,0 +1,11 @@
+Source: impuzzle
+Section: user/games
+Priority: optional
+Maintainer: Timo Härkönen <timop.harkonen@gmail.com>
+Build-Depends: debhelper (>= 5), libqt4-maemo5-dev
+Standards-Version: 3.7.2
+
+Package: impuzzle
+Architecture: any
+Depends: libqt4-maemo5-core, libqt4qt-maemo5-gui
+Description: Image puzzle game
