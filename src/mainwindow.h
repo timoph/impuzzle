@@ -31,9 +31,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
 
-public slots:
+private slots:
     void newGameClicked();
     void importClicked();
+    void settingsClicked();
 
 private:
     void createActions();
@@ -41,6 +42,7 @@ private:
 
     QAction *newGameAction_;
     QAction *importAction_;
+    QAction *settingsAction_;
 
     QMenu *menu_;
 };

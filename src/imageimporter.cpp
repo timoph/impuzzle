@@ -46,6 +46,7 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
     QPixmap tmp;
 
     if(pixmap.isNull()) {
+        qDebug() << "Got NULL image - using default.jpg";
         tmp = QPixmap(":/images/default.jpg");
     }
     else {

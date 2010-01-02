@@ -25,4 +25,7 @@
 
 #define GAME_VERSION = "0.1"
 
+#define EASY_PIECE_COUNT 12
+#define HARD_PIECE_COUNT 20
+
 #endif // DEFINES_H
