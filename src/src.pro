@@ -11,7 +11,9 @@ HEADERS += gameview.h \
     puzzleitem.h \
     newgamedialog.h \
     defines.h \
-    introitem.h
+    introitem.h \
+    settings.h \
+    settingsdialog.h
 
 SOURCES += gameview.cpp \
     main.cpp \
@@ -19,7 +21,9 @@ SOURCES += gameview.cpp \
     imageimporter.cpp \
     puzzleitem.cpp \
     newgamedialog.cpp \
-    introitem.cpp
+    introitem.cpp \
+    settings.cpp \
+    settingsdialog.cpp
 
 RESOURCES += resources.qrc
 

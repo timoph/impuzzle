@@ -1,3 +1,9 @@
+impuzzle (0.2-1maemo0) unstable; urgency=low
+
+  * Fixes: All pieces movable after shuffle
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sat, 2 Jan 2010 17:26:12 +0200
+
 impuzzle (0.1-1maemo1) unstable; urgency=low
 
   * Fixes: Typo in package dependencies

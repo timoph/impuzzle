@@ -18,6 +18,8 @@
 
 #include "mainwindow.h"
 #include "gameview.h"
+#include "settings.h"
+#include "settingsdialog.h"
 
 #include <QAction>
 #include <QMenu>
@@ -49,6 +51,9 @@ void MainWindow::createActions()
     importAction_ = new QAction(tr("Import image"), this);
     connect(importAction_, SIGNAL(triggered()), this, SLOT(importClicked()));
     importAction_->setDisabled(true);
+
+    settingsAction_ = new QAction(tr("Settings"), this);
+    connect(settingsAction_, SIGNAL(triggered()), this, SLOT(settingsClicked()));
 }
 
 void MainWindow::importClicked()
@@ -58,5 +63,13 @@ void MainWindow::importClicked()
 
 void MainWindow::newGameClicked()
 {
-    GameView::instance()->setPieces(ImageImporter::instance()->newPieces(0, 20));
+    SettingsDialog dialog(this);
+    dialog.exec();
+
+    GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
+}
+
+void MainWindow::settingsClicked()
+{
+
 }
