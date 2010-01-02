@@ -22,6 +22,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPropertyAnimation>
 
+int PuzzleItem::moveCount_ = 0;
+
 PuzzleItem::PuzzleItem(QGraphicsItem *parent) :
         QGraphicsPixmapItem(parent)
 {
@@ -75,9 +77,17 @@ void PuzzleItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         GameView::instance()->setEmptyPlace(tmp);
         event->accept();
 
+        moveCount_++;
+
         // If piece is in its place check if we won the game
+        bool won = false;
         if(currentPlace() == correctPlace()) {
-            GameView::instance()->areAllPiecesOk();
+            won = GameView::instance()->areAllPiecesOk();
+        }
+
+        // if we didn't win set pieces that can be moved
+        if(!won) {
+            GameView::instance()->setMovingPieces();
         }
     }
     else {
@@ -88,4 +98,14 @@ void PuzzleItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void PuzzleItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     event->ignore();
+}
+
+int PuzzleItem::moveCount()
+{
+    return moveCount_;
+}
+
+void PuzzleItem::resetMoveCount()
+{
+    moveCount_ = 0;
 }

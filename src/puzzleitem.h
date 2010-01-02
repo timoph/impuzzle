@@ -38,6 +38,8 @@ public:
     bool movable() const;
     void setMovable(bool canMove);
     void moveMeTo(const QPointF &location);
+    static int moveCount();
+    static void resetMoveCount();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -48,5 +50,6 @@ private:
     QPointF currentPlace_;
     bool movable_;
     QPropertyAnimation *moveAnimation_;
+    static int moveCount_;
 };
 #endif

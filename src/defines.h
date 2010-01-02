@@ -23,4 +23,6 @@
 
 #define IMAGE_HEIGHT 400
 
+#define GAME_VERSION = "0.1"
+
 #endif // DEFINES_H
