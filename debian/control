@@ -7,5 +7,5 @@ Standards-Version: 3.7.2
 
 Package: impuzzle
 Architecture: any
-Depends: libqt4-maemo5-core, libqt4qt-maemo5-gui
+Depends: libqt4-maemo5-core, libqt4-maemo5-gui
 Description: Image puzzle game
