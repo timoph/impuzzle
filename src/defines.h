@@ -23,9 +23,13 @@
 
 #define IMAGE_HEIGHT 400
 
-#define GAME_VERSION = "0.1"
+#define GAME_VERSION = "0.2"
 
 #define EASY_PIECE_COUNT 12
 #define HARD_PIECE_COUNT 20
+
+#define DEFAULT_IMAGE_TXT "Default image"
+#define RANDOM_IMAGE_TXT "Random image"
+#define SELECT_IMAGE_TXT "Select image..."
 
 #endif // DEFINES_H
