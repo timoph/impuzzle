@@ -9,7 +9,6 @@ HEADERS += gameview.h \
     mainwindow.h \
     imageimporter.h \
     puzzleitem.h \
-    newgamedialog.h \
     defines.h \
     introitem.h \
     settings.h \
@@ -20,7 +19,6 @@ SOURCES += gameview.cpp \
     mainwindow.cpp \
     imageimporter.cpp \
     puzzleitem.cpp \
-    newgamedialog.cpp \
     introitem.cpp \
     settings.cpp \
     settingsdialog.cpp
