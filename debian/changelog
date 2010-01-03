@@ -1,8 +1,11 @@
 impuzzle (0.2-1maemo0) unstable; urgency=low
 
+  * Implements: User specified image used in puzzle
+  * Implements: Random image used in puzzle
+  * Implements: Difficulty settings
   * Fixes: All pieces movable after shuffle
 
- -- Timo Härkönen <timop.harkonen@gmail.com>  Sat, 2 Jan 2010 17:26:12 +0200
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sun, 3 Jan 2010 10:32:42 +0200
 
 impuzzle (0.1-1maemo1) unstable; urgency=low
 

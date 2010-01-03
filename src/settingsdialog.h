@@ -7,6 +7,8 @@ class QVBoxLayout;
 class QGroupBox;
 class QRadioButton;
 class QHBoxLayout;
+class QComboBox;
+class QLabel;
 
 class SettingsDialog : public QDialog
 {
@@ -17,6 +19,7 @@ public:
 
 private slots:
     void difficultySelectionChanged(bool value);
+    void imageSelectionChanged(const QString &txt);
 
 private:
     QVBoxLayout *mainLayout_;
@@ -26,5 +29,9 @@ private:
     QRadioButton *hardButton_;
 
     QGroupBox *buttonGroup_;
+
+    QComboBox *imageCombo_;
+
+    QLabel *selectedImageLabel_;
 };
 #endif
