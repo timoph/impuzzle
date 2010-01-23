@@ -21,6 +21,9 @@
 
 #include <QGraphicsSceneMouseEvent>
 #include <QPropertyAnimation>
+#include <QPainter>
+#include <QFont>
+#include <QFontMetrics>
 
 int PuzzleItem::moveCount_ = 0;
 
@@ -29,6 +32,7 @@ PuzzleItem::PuzzleItem(QGraphicsItem *parent) :
 {
     movable_ = true;
     moveAnimation_ = new QPropertyAnimation(this, "pos", this);
+    pieceNumber_ = 0;
 }
 
 QPointF PuzzleItem::correctPlace() const
@@ -108,4 +112,39 @@ int PuzzleItem::moveCount()
 void PuzzleItem::resetMoveCount()
 {
     moveCount_ = 0;
+}
+
+void PuzzleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QGraphicsPixmapItem::paint(painter, option, widget);
+
+    painter->save();
+
+    QFont font = painter->font();
+    QFontMetrics metrics(font);
+    QRect numberRect(0, 0, metrics.height(), metrics.height());
+
+    painter->setPen(Qt::NoPen);
+
+    painter->setBrush(QColor(255, 255, 255, 192));
+    painter->drawRect(numberRect);
+
+    painter->setPen(Qt::black);
+
+    QTextOption textOption;
+    textOption.setAlignment(Qt::AlignCenter);
+
+    painter->drawText(numberRect, QString::number(pieceNumber_), textOption);
+
+    painter->restore();
+}
+
+int PuzzleItem::pieceNumber() const
+{
+    return pieceNumber_;
+}
+
+void PuzzleItem::setPieceNumber(const int pieceNumber)
+{
+    pieceNumber_ = pieceNumber;
 }

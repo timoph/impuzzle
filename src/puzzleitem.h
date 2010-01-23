@@ -40,6 +40,9 @@ public:
     void moveMeTo(const QPointF &location);
     static int moveCount();
     static void resetMoveCount();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void setPieceNumber(const int pieceNumber);
+    int pieceNumber() const;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -51,5 +54,6 @@ private:
     bool movable_;
     QPropertyAnimation *moveAnimation_;
     static int moveCount_;
+    int pieceNumber_;
 };
 #endif

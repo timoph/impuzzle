@@ -51,6 +51,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     connect(imageCombo_, SIGNAL(currentIndexChanged(QString)), this, SLOT(imageSelectionChanged(QString)));
 }
 
+int SettingsDialog::exec()
+{
+    // Making sure that a random image is picked when starting a new game after the first game (fix me)
+    if(imageCombo_->currentText() == RANDOM_IMAGE_TXT) {
+        imageSelectionChanged(RANDOM_IMAGE_TXT);
+    }
+
+    return QDialog::exec();
+}
+
 void SettingsDialog::difficultySelectionChanged(bool value)
 {
     if(value) {
