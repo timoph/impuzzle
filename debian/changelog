@@ -1,8 +1,15 @@
+impuzzle (0.3-1maemo0) unstable; urgency=low
+
+  * Implemented: Show location numbers on the pieces
+  * Fixes: Random image not random after first game
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sat, 23 Jan 2010 22:59:42 +0200
+
 impuzzle (0.2-1maemo0) unstable; urgency=low
 
-  * Implements: User specified image used in puzzle
-  * Implements: Random image used in puzzle
-  * Implements: Difficulty settings
+  * Implemented: User specified image used in puzzle
+  * Implemented: Random image used in puzzle
+  * Implemented: Difficulty settings
   * Fixes: All pieces movable after shuffle
 
  -- Timo Härkönen <timop.harkonen@gmail.com>  Sun, 3 Jan 2010 10:32:42 +0200

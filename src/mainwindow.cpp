@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     createMenu();
 
     setCentralWidget(GameView::instance());
+    settingsDialog_ = new SettingsDialog(this);
 }
 
 void MainWindow::createMenu()
@@ -63,8 +64,9 @@ void MainWindow::importClicked()
 
 void MainWindow::newGameClicked()
 {
-    SettingsDialog dialog(this);
-    dialog.exec();
+    //SettingsDialog dialog(this);
+    //dialog.exec();
+    settingsDialog_->exec();
 
     GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
 }

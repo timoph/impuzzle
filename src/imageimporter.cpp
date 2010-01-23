@@ -75,11 +75,15 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
     int verticalStep = IMAGE_HEIGHT / verticalCount;
     int horizontalStep = IMAGE_WIDTH / horizontalCount;
 
+    int pieceNo = 1;
+
     for(int i = 0; i < verticalCount; ++i) {
         for(int j = 0; j < horizontalCount; ++j) {
             PuzzleItem *item = new PuzzleItem;
             item->setPixmap(tmp.copy(QRect(QPoint(j * horizontalStep, i * verticalStep),
                                            QPoint(horizontalStep + j * horizontalStep, verticalStep + i * verticalStep))));
+            item->setPieceNumber(pieceNo);
+            pieceNo++;
             list.append(item);
         }
     }

@@ -23,6 +23,7 @@
 
 class QAction;
 class QMenu;
+class SettingsDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -45,5 +46,7 @@ private:
     QAction *settingsAction_;
 
     QMenu *menu_;
+
+    SettingsDialog *settingsDialog_;
 };
 #endif

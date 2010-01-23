@@ -17,6 +17,9 @@ class SettingsDialog : public QDialog
 public:
     SettingsDialog(QWidget *parent = 0);
 
+public slots:
+    int exec();
+
 private slots:
     void difficultySelectionChanged(bool value);
     void imageSelectionChanged(const QString &txt);
