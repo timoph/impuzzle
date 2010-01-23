@@ -35,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setCentralWidget(GameView::instance());
     settingsDialog_ = new SettingsDialog(this);
+
+    setWindowTitle(tr("ImPuzzle"));
 }
 
 void MainWindow::createMenu()

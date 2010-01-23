@@ -23,7 +23,7 @@
 
 #define IMAGE_HEIGHT 400
 
-#define GAME_VERSION = "0.2"
+#define GAME_VERSION 0.3
 
 #define EASY_PIECE_COUNT 12
 #define HARD_PIECE_COUNT 20

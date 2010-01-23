@@ -22,6 +22,10 @@ void IntroItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
     painter->save();
 
+    painter->setBrush(Qt::black);
+    painter->setPen(Qt::NoPen);
+    painter->drawRect(boundingRect());
+
     painter->setBrush(Qt::NoBrush);
     painter->setPen(Qt::white);
 
