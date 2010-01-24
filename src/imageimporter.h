@@ -21,6 +21,8 @@
 
 #include <QObject>
 
+#include "defines.h"
+
 class QPixmap;
 class PuzzleItem;
 
@@ -30,7 +32,7 @@ class ImageImporter : public QObject
 
 public:
     static ImageImporter *instance();
-    QList<PuzzleItem *> newPieces(const QPixmap &pixmap, const int count = 12);
+    QList<PuzzleItem *> newPieces(const QPixmap &pixmap, const int count = EASY_PIECE_COUNT);
 
 private:
     ImageImporter(QObject *parent = 0);

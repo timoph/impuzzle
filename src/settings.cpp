@@ -1,11 +1,12 @@
 #include "settings.h"
+#include "defines.h"
 
 Settings *Settings::instance_ = 0;
 
 Settings::Settings(QObject *parent) :
         QObject(parent)
 {
-    pieceCount_ = 12;
+    pieceCount_ = EASY_PIECE_COUNT;
     image_ = 0;
 }
 

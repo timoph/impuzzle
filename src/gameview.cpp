@@ -83,11 +83,11 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces)
     int horizontalCount = 0;
 
     // Find out board size
-    if(pieces_.count() == 12) {
-        horizontalCount = 4;
+    if(pieces_.count() == EASY_PIECE_COUNT) {
+        horizontalCount = EASY_HORIZONTAL_COUNT;
     }
-    else if(pieces_.count() == 20) {
-        horizontalCount = 5;
+    else if(pieces_.count() == HARD_PIECE_COUNT) {
+        horizontalCount = HARD_HORIZONTAL_COUNT;
     }
     else {
         qDebug() << "Invalid piece count @ GameView::setPieces";
@@ -109,11 +109,12 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces)
             pieces_.at(pieceNumber)->setPos(point);
             pieces_.at(pieceNumber)->setCorrectPlace(point);
             pieces_.at(pieceNumber)->setCurrentPlace(point);
+            pieces_.at(pieceNumber)->setDrawNumber(true);
             pieceNumber++;
         }
     }
 
-    // Wait a second
+    // Wait
     QTimer::singleShot(750, this, SLOT(shufflePieces()));
 }
 
@@ -186,9 +187,10 @@ bool GameView::areAllPiecesOk() const
     pieces_.at(hiddenIndex_)->show();
     pieces_.at(hiddenIndex_)->moveMeTo(emptyPlace_);
 
-    // Set all pieces not movable
+    // Set all pieces not movable and hide numbers
     for(int i = 0; i < pieces_.count(); ++i) {
         pieces_.at(i)->setMovable(false);
+        pieces_.at(i)->setDrawNumber(false);
     }
 
     // Show dialog with move count
