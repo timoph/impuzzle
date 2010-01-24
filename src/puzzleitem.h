@@ -43,6 +43,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void setPieceNumber(const int pieceNumber);
     int pieceNumber() const;
+    void setDrawNumber(bool value);
+    bool drawNumber() const;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -55,5 +57,6 @@ private:
     QPropertyAnimation *moveAnimation_;
     static int moveCount_;
     int pieceNumber_;
+    bool drawNumber_;
 };
 #endif

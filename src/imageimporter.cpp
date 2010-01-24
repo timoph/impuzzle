@@ -61,13 +61,14 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
 
     int horizontalCount = 0;
 
-    if(count == 12) {
-        horizontalCount = 4;
+    if(count == EASY_PIECE_COUNT) {
+        horizontalCount = EASY_HORIZONTAL_COUNT;
     }
-    else if(count == 20) {
-        horizontalCount = 5;
+    else if(count == HARD_PIECE_COUNT) {
+        horizontalCount = HARD_HORIZONTAL_COUNT;
     }
     else {
+        qDebug() << QString("Bad piece count ( %1 ) @ ImageImporter::newPieces").arg(count);
         return list;
     }
 

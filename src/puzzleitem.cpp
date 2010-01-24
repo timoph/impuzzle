@@ -33,6 +33,7 @@ PuzzleItem::PuzzleItem(QGraphicsItem *parent) :
     movable_ = true;
     moveAnimation_ = new QPropertyAnimation(this, "pos", this);
     pieceNumber_ = 0;
+    drawNumber_ = true;
 }
 
 QPointF PuzzleItem::correctPlace() const
@@ -118,25 +119,27 @@ void PuzzleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 {
     QGraphicsPixmapItem::paint(painter, option, widget);
 
-    painter->save();
+    if(drawNumber_) {
+        painter->save();
 
-    QFont font = painter->font();
-    QFontMetrics metrics(font);
-    QRect numberRect(0, 0, metrics.height(), metrics.height());
+        QFont font = painter->font();
+        QFontMetrics metrics(font);
+        QRect numberRect(0, 0, metrics.height(), metrics.height());
 
-    painter->setPen(Qt::NoPen);
+        painter->setPen(Qt::NoPen);
 
-    painter->setBrush(QColor(255, 255, 255, 192));
-    painter->drawRect(numberRect);
+        painter->setBrush(QColor(255, 255, 255, 192));
+        painter->drawRect(numberRect);
 
-    painter->setPen(Qt::black);
+        painter->setPen(Qt::black);
 
-    QTextOption textOption;
-    textOption.setAlignment(Qt::AlignCenter);
+        QTextOption textOption;
+        textOption.setAlignment(Qt::AlignCenter);
 
-    painter->drawText(numberRect, QString::number(pieceNumber_), textOption);
+        painter->drawText(numberRect, QString::number(pieceNumber_), textOption);
 
-    painter->restore();
+        painter->restore();
+    }
 }
 
 int PuzzleItem::pieceNumber() const
@@ -147,4 +150,17 @@ int PuzzleItem::pieceNumber() const
 void PuzzleItem::setPieceNumber(const int pieceNumber)
 {
     pieceNumber_ = pieceNumber;
+}
+
+void PuzzleItem::setDrawNumber(bool value)
+{
+    if(value != drawNumber_) {
+        drawNumber_ = value;
+        update();
+    }
+}
+
+bool PuzzleItem::drawNumber() const
+{
+    return drawNumber_;
 }

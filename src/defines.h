@@ -25,8 +25,10 @@
 
 #define GAME_VERSION 0.3
 
-#define EASY_PIECE_COUNT 12
-#define HARD_PIECE_COUNT 20
+#define EASY_PIECE_COUNT 9
+#define EASY_HORIZONTAL_COUNT 3
+#define HARD_PIECE_COUNT 16
+#define HARD_HORIZONTAL_COUNT 4
 
 #define DEFAULT_IMAGE_TXT "Default image"
 #define RANDOM_IMAGE_TXT "Random image"
