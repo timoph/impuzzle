@@ -1,3 +1,10 @@
+impuzzle (0.3-2maemo1) unstable; urgency=low
+
+  * Added application icon
+  * Added bug tracking link to control
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Tue, 09 Mar 2010 19:09:13 +0200
+
 impuzzle (0.3-2maemo0) unstable; urgency=low
 
   * Fixes: Adjusted pieces couts, pieces are now in square formation
