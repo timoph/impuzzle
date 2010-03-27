@@ -164,3 +164,8 @@ bool PuzzleItem::drawNumber() const
 {
     return drawNumber_;
 }
+
+void PuzzleItem::setMoveCount(int count)
+{
+    moveCount_ = count;
+}

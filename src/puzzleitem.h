@@ -39,6 +39,7 @@ public:
     void setMovable(bool canMove);
     void moveMeTo(const QPointF &location);
     static int moveCount();
+    static void setMoveCount(const int count);
     static void resetMoveCount();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void setPieceNumber(const int pieceNumber);
