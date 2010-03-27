@@ -44,6 +44,7 @@ private:
     QAction *newGameAction_;
     QAction *importAction_;
     QAction *settingsAction_;
+    QAction *saveAction_;
 
     QMenu *menu_;
 

@@ -87,7 +87,9 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
 
         qDebug() << QString("pics list contains %1 entries").arg(pics.count());
 
-        Settings::instance()->setImage(QPixmap(QDir::homePath() + QLatin1String("/MyDocs/.images/") + pics.at(qrand() % pics.count())));
+        QString path = QDir::homePath() + QLatin1String("/MyDocs/.images/") + pics.at(qrand() % pics.count());
+        Settings::instance()->setImage(QPixmap(path));
+        Settings::instance()->setImagePath(path);
 
         if(selectedImageLabel_->isVisible()) {
             selectedImageLabel_->setVisible(false);
@@ -102,6 +104,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
                                                          tr("Images (*.png *.xpm *.jpg)"));
 
         Settings::instance()->setImage(QPixmap(fileName));
+        Settings::instance()->setImagePath(fileName);
 
         selectedImageLabel_->setText(fileName);
 
@@ -113,6 +116,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
         qDebug() << "Default image selected";
 
         Settings::instance()->setImage(0);
+        Settings::instance()->setImagePath("default");
 
         if(selectedImageLabel_->isVisible()) {
             selectedImageLabel_->setVisible(false);

@@ -43,6 +43,7 @@ void MainWindow::createMenu()
 {
     menu_ = menuBar()->addMenu("");
     menu_->addAction(newGameAction_);
+    menu_->addAction(saveAction_);
     menu_->addAction(importAction_);
 }
 
@@ -57,6 +58,9 @@ void MainWindow::createActions()
 
     settingsAction_ = new QAction(tr("Settings"), this);
     connect(settingsAction_, SIGNAL(triggered()), this, SLOT(settingsClicked()));
+
+    saveAction_ = new QAction(tr("Save game"), this);
+    connect(saveAction_, SIGNAL(triggered()), GameView::instance(), SLOT(saveGame()));
 }
 
 void MainWindow::importClicked()

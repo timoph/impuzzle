@@ -38,8 +38,13 @@ public:
     void setMovingPieces();
 
 public slots:
-    void setPieces(const QList<PuzzleItem *> pieces);
+    void setPieces(const QList<PuzzleItem *> pieces, bool shuffle = true);
     void shufflePieces();
+    bool restoreGame();
+    bool saveGame();
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private:
     GameView(QWidget *parent = 0);

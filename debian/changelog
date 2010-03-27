@@ -1,9 +1,9 @@
 impuzzle (0.3-2maemo1) unstable; urgency=low
 
-  * Added application icon
   * Added bug tracking link to control
+  * Dependency changes required by pr1.2 autobuilder
 
- -- Timo Härkönen <timop.harkonen@gmail.com>  Tue, 09 Mar 2010 19:09:13 +0200
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Wed, 24 Mar 2010 17:51:13 +0200
 
 impuzzle (0.3-2maemo0) unstable; urgency=low
 

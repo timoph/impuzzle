@@ -8,6 +8,7 @@ Settings::Settings(QObject *parent) :
 {
     pieceCount_ = EASY_PIECE_COUNT;
     image_ = 0;
+    imagePath_ = "";
 }
 
 Settings *Settings::instance()
@@ -37,4 +38,14 @@ QPixmap Settings::image() const
 void Settings::setImage(const QPixmap &image)
 {
     image_ = image;
+}
+
+QString Settings::imagePath() const
+{
+    return imagePath_;
+}
+
+void Settings::setImagePath(const QString &path)
+{
+    imagePath_ = path;
 }

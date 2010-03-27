@@ -17,6 +17,9 @@ public:
     QPixmap image() const;
     void setImage(const QPixmap &image);
 
+    QString imagePath() const;
+    void setImagePath(const QString &path);
+
 private:
     Settings(QObject *parent = 0);
 
@@ -24,5 +27,6 @@ private:
 
     int pieceCount_;
     QPixmap image_;
+    QString imagePath_;
 };
 #endif

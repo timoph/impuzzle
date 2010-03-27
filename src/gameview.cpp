@@ -20,6 +20,8 @@
 #include "puzzleitem.h"
 #include "defines.h"
 #include "introitem.h"
+#include "imageimporter.h"
+#include "settings.h"
 
 #include <QGraphicsScene>
 #include <QDateTime>
@@ -28,6 +30,10 @@
 #include <QParallelAnimationGroup>
 #include <QFont>
 #include <QMessageBox>
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
+#include <QCloseEvent>
 
 #include <QDebug>
 
@@ -42,12 +48,21 @@ GameView::GameView(QWidget *parent) :
 
     introItem_ = new IntroItem;
     introItem_->setText("Select new game from menu to play");
-    scene_->addItem(introItem_);
 
     verticalStep_ = 0;
     horizontalStep_ = 0;
 
     qsrand(QDateTime::currentDateTime().toTime_t());
+
+    if(QFile::exists(QString("%1/%2/%3")
+                    .arg(QDir::homePath()).arg(HOME_DIRECTORY).arg(RESTORE_FILE))) {
+        if(!restoreGame()) {
+            setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
+        }
+    }
+    else {
+        scene_->addItem(introItem_);
+    }
 }
 
 GameView *GameView::instance()
@@ -64,7 +79,7 @@ QList<PuzzleItem *> GameView::pieces() const
     return pieces_;
 }
 
-void GameView::setPieces(const QList<PuzzleItem *> pieces)
+void GameView::setPieces(const QList<PuzzleItem *> pieces, bool shuffle)
 {
     if(pieces.isEmpty()) {
         qDebug() << "Empty list @ GameView::setPieces";
@@ -114,8 +129,10 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces)
         }
     }
 
-    // Wait
-    QTimer::singleShot(750, this, SLOT(shufflePieces()));
+    // Wait and shuffle if desired
+    if(shuffle) {
+        QTimer::singleShot(750, this, SLOT(shufflePieces()));
+    }
 }
 
 void GameView::shufflePieces()
@@ -140,7 +157,6 @@ void GameView::shufflePieces()
         }
     }
 
-    // TODO Animate transitions to new locations
     QParallelAnimationGroup *animationGroup = new QParallelAnimationGroup(this);
     for(int i = 0; i < pieces_.count(); ++i) {
         QPropertyAnimation *animation = new QPropertyAnimation(pieces_.at(i), "pos");
@@ -235,4 +251,183 @@ void GameView::setMovingPieces()
             pieces_.at(i)->setMovable(false);
         }
     }
+}
+
+bool GameView::restoreGame()
+{
+    // Read settings from file
+    QFile file(QString("%1/%2/%3")
+               .arg(QDir::homePath())
+               .arg(HOME_DIRECTORY)
+               .arg(RESTORE_FILE));
+
+    if(!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open restore file for reading";
+        return false;
+    }
+
+    QTextStream in(&file);
+
+    QStringList list;
+
+    list = in.readLine().split(";;");
+
+    qDebug() << "restore list count: " << list.count();
+
+    if(!list.isEmpty()) {
+        Settings::instance()->setPieceCount(list.at(0).toInt());
+
+        QString im = list.at(1);
+        if(im == "default" || im.isEmpty()) {
+            Settings::instance()->setImage(0);
+            Settings::instance()->setImagePath("default");
+        }
+        else {
+            Settings::instance()->setImagePath(im);
+            Settings::instance()->setImage(QPixmap(im));
+        }
+        PuzzleItem::setMoveCount(list.at(2).toInt());
+
+        setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()), false);
+
+        qDebug() << "pieces_ count after restoring image: " << pieces_.count();
+
+        if(list.count() >= pieces_.count() + 3) {
+            for(int j = 0; j < pieces_.count(); ++j) {
+                if(!list.at(j + 3).isNull()) {
+                    QStringList points = list.at(j + 3).split("#");
+                    //if(points.count() == 2)
+                    QPointF point(points.at(0).toInt(), points.at(1).toInt());
+
+                    qDebug() << "Setting piece " << pieces_.at(j)->pieceNumber();
+                    qDebug() << "x: " << point.x() << " y: " << point.y();
+
+                    pieces_.at(j)->setCurrentPlace(point);
+                }
+            }
+        }
+        else {
+            file.close();
+            file.remove();
+            return false;
+        }
+
+        QStringList hidden = list.last().split("#");
+
+        if(hidden.count() == 3) {
+            for(int m = 0; m < pieces_.count(); ++m) {
+                pieces_.at(m)->setPos(pieces_.at(m)->currentPlace());
+                if(pieces_.at(m)->pieceNumber() == hidden.at(2).toInt()) {
+                    qDebug() << "Hiding piece number " << hidden;
+                    hiddenIndex_ = m;
+                }
+            }
+
+            setEmptyPlace(QPointF(hidden.at(0).toInt(), hidden.at(1).toInt()));
+
+            pieces_.at(hiddenIndex_)->setVisible(false);
+
+            setMovingPieces();
+        }
+        else {
+            // TODO: revert
+            setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
+            file.close();
+            file.remove();
+            return false;
+        }
+    }
+    else {
+        qDebug() << "Invalid restore file";
+        file.close();
+        file.remove();
+        return false;
+    }
+
+    file.close();
+    file.remove();
+
+    return true;
+}
+
+bool GameView::saveGame()
+{
+    if(pieces_.isEmpty() || pieces_.count() < EASY_PIECE_COUNT) {
+        return false;
+    }
+
+    QDir dir;
+    if(!dir.exists(QString("%1/%2")
+                    .arg(QDir::homePath())
+                    .arg(HOME_DIRECTORY))) {
+        dir.mkpath(QString("%1/%2")
+                   .arg(QDir::homePath())
+                   .arg(HOME_DIRECTORY));
+    }
+
+    QFile file(QString("%1/%2/%3")
+               .arg(QDir::homePath())
+               .arg(HOME_DIRECTORY)
+               .arg(RESTORE_FILE));
+
+    if(!file.open(QIODevice::WriteOnly)) {
+        qDebug() << "Failed to open restore file for writing";
+        return false;
+    }
+
+    QTextStream out(&file);
+
+    out << Settings::instance()->pieceCount();
+    out << ";;";
+    if(Settings::instance()->imagePath().isEmpty()) {
+        out << "default";
+    }
+    else {
+        out << Settings::instance()->imagePath();
+    }
+    out << ";;";
+    out << PuzzleItem::moveCount();
+    out << ";;";
+
+    // piece positions
+    int number = 0;
+    int hiddenNo = 0;
+
+    while(number != pieces_.count()) {
+        for(int i = 0; i < pieces_.count(); ++i) {
+            if(pieces_.at(i)->pieceNumber() == number + 1) {
+                out << pieces_.at(i)->currentPlace().x();
+                out << "#";
+                out << pieces_.at(i)->currentPlace().y();
+                out << ";;";
+                pieces_.at(i)->pieceNumber();
+                if(!pieces_.at(i)->isVisible()) {
+                    hiddenNo = number + 1;
+                }
+                number++;
+                break;
+            }
+        }
+    }
+
+    out << QString("%1#%2#%3").arg(emptyPlace().x()).arg(emptyPlace().y()).arg(hiddenNo);
+
+    out << "\n";
+
+    file.close();
+
+    return true;
+}
+
+void GameView::closeEvent(QCloseEvent *event)
+{
+    int answer = QMessageBox::question(this, tr("Save game status?"),
+                                       tr("Saved status will be automatically loaded when you start the application next time"),
+                                       QMessageBox::Yes, QMessageBox::No);
+
+    if(answer == QMessageBox::Yes) {
+        saveGame();
+    }
+
+    event->accept();
 }
