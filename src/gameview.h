@@ -34,7 +34,7 @@ public:
     QList<PuzzleItem *> pieces() const;
     QPointF emptyPlace();
     void setEmptyPlace(const QPointF &place);
-    bool areAllPiecesOk() const;
+    bool areAllPiecesOk();
     void setMovingPieces();
 
 public slots:
@@ -42,6 +42,9 @@ public slots:
     void shufflePieces();
     bool restoreGame();
     bool saveGame();
+
+signals:
+    void gameWon();
 
 protected:
     void closeEvent(QCloseEvent *event);

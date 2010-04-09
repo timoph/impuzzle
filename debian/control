@@ -8,7 +8,7 @@ XSBC-Bugtracker: mailto:timop.harkonen@gmail.com
 
 Package: impuzzle
 Architecture: any
-Depends: libqt4-core (>= 4.6.0), libqt4-gui (>= 4.6.0)
+Depends: libqt4-core (>= 4.6.0), libqt4-gui (>= 4.6.0), libqt4-maemo5 (>= 4.6.0)
 Description: Image puzzle game
  impuzzle is a picture puzzle game that let's you
  use your own pictures as the game board.

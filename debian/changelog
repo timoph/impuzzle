@@ -1,3 +1,10 @@
+impuzzle (0.4-1maemo0) unstable; urgency=low
+
+  * Implemented: Game state save and restore
+  * Implemented: Maemo5 style notifications
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Wed, 24 Mar 2010 17:51:13 +0200
+
 impuzzle (0.3-2maemo1) unstable; urgency=low
 
   * Added bug tracking link to control

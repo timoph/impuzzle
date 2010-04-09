@@ -34,7 +34,7 @@
 #define RANDOM_IMAGE_TXT "Random image"
 #define SELECT_IMAGE_TXT "Select image..."
 
-#define RESTORE_FILE "impuzzle.restore"
+#define RESTORE_FILE "impuzzle.dat"
 #define HOME_DIRECTORY ".impuzzle"
 
 #endif // DEFINES_H
