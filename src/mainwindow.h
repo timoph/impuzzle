@@ -36,6 +36,7 @@ private slots:
     void newGameClicked();
     void importClicked();
     void settingsClicked();
+    void gameEnded();
 
 private:
     void createActions();

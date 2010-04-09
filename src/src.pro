@@ -4,6 +4,10 @@ DEPENDPATH += .
 INCLUDEPATH += .
 DESTDIR = ../bin
 
+maemo5 {
+    QT += maemo5
+}
+
 # Input
 HEADERS += gameview.h \
     mainwindow.h \

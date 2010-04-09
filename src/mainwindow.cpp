@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     settingsDialog_ = new SettingsDialog(this);
 
     setWindowTitle(tr("ImPuzzle"));
+
+    connect(GameView::instance(), SIGNAL(gameWon()), this, SLOT(gameEnded()));
 }
 
 void MainWindow::createMenu()
@@ -61,6 +63,7 @@ void MainWindow::createActions()
 
     saveAction_ = new QAction(tr("Save game"), this);
     connect(saveAction_, SIGNAL(triggered()), GameView::instance(), SLOT(saveGame()));
+    saveAction_->setDisabled(true);
 }
 
 void MainWindow::importClicked()
@@ -75,9 +78,17 @@ void MainWindow::newGameClicked()
     settingsDialog_->exec();
 
     GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
+    saveAction_->setEnabled(true);
 }
 
 void MainWindow::settingsClicked()
 {
 
+}
+
+void MainWindow::gameEnded()
+{
+    if(saveAction_->isEnabled()) {
+        saveAction_->setDisabled(true);
+    }
 }
