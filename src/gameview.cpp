@@ -36,6 +36,9 @@
 #include <QCloseEvent>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QTimer>
+#include <QApplication>
+#include <QDateTime>
 
 #ifdef Q_WS_MAEMO_5
 #include <QMaemo5InformationBox>
@@ -48,6 +51,7 @@ GameView *GameView::instance_ = 0;
 GameView::GameView(QWidget *parent) :
         QGraphicsView(parent)
 {
+    qsrand(QDateTime::currentDateTime().toTime_t());
     scene_ = new QGraphicsScene;
     hiddenIndex_ = -1;
     setScene(scene_);
@@ -65,6 +69,9 @@ GameView::GameView(QWidget *parent) :
         if(!restoreGame()) {
             setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
             PuzzleItem::setMoveCount(0);
+        }
+        else {
+            QTimer::singleShot(0, this, SIGNAL(gameRestored()));
         }
     }
     else {
@@ -150,17 +157,59 @@ void GameView::shufflePieces()
     }
 
     // Give pieces ramdom locations
-    int rounds = 5; //TODO
-    for(int j = 0; j < rounds; ++j) {
-        for(int i = 0; i < pieces_.count(); ++i) {
-            QPointF tmp;
-            int changeIndex = 0;
-            while(changeIndex == i) {
-                changeIndex = qrand() % pieces_.count();
+    hiddenIndex_ = qrand() % pieces_.count();
+    emptyPlace_ = pieces_.at(hiddenIndex_)->currentPlace();
+
+    QPointF topLeft = pieces_.at(0)->correctPlace();
+    QPointF bottomRight = pieces_.last()->correctPlace();
+
+    for(int i = 0; i < pieces_.count() * 10; ++i) {
+        int rand = qrand() % 4;
+
+        switch(rand) {
+        // up
+        case 0:
+            if(pieces_.at(hiddenIndex_)->currentPlace().y() > topLeft.y()) {
+                QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(0, -verticalStep_)));
+                emptyPlace_ = item->currentPlace();
+                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                item->setCurrentPlace(tmp);
             }
-            tmp = pieces_.at(changeIndex)->currentPlace();
-            pieces_.at(changeIndex)->setCurrentPlace(pieces_.at(i)->currentPlace());
-            pieces_.at(i)->setCurrentPlace(tmp);
+            break;
+        // down
+        case 1:
+            if(pieces_.at(hiddenIndex_)->currentPlace().y() < bottomRight.y()) {
+                QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(0, verticalStep_)));
+                emptyPlace_ = item->currentPlace();
+                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                item->setCurrentPlace(tmp);
+            }
+            break;
+        // left
+        case 2:
+            if(pieces_.at(hiddenIndex_)->currentPlace().x() > topLeft.x()) {
+                QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(-horizontalStep_, 0)));
+                emptyPlace_ = item->currentPlace();
+                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                item->setCurrentPlace(tmp);
+            }
+            break;
+        // right
+        case 3:
+            if(pieces_.at(hiddenIndex_)->currentPlace().x() < bottomRight.x()) {
+                QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(horizontalStep_, 0)));
+                emptyPlace_ = item->currentPlace();
+                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                item->setCurrentPlace(tmp);
+            }
+            break;
+        default:
+            qDebug() << "WTF?";
+            break;
         }
     }
 
@@ -175,11 +224,8 @@ void GameView::shufflePieces()
     }
     animationGroup->start();
 
-    // Hide random piece
-    int hiddenPiece = qrand() % pieces_.count();
-    emptyPlace_ = pieces_.at(hiddenPiece)->currentPlace();
-    pieces_.at(hiddenPiece)->hide();
-    hiddenIndex_ = hiddenPiece;
+    // Hide
+    pieces_.at(hiddenIndex_)->hide();
 
     setMovingPieces();
 }
@@ -319,7 +365,7 @@ bool GameView::restoreGame()
             for(int j = 0; j < pieces_.count(); ++j) {
                 if(!list.at(j + 3).isNull()) {
                     QStringList points = list.at(j + 3).split("#");
-                    //if(points.count() == 2)
+
                     int x = points.at(0).toInt(&ok);
                     if(!ok) {
                         return false;
@@ -395,10 +441,10 @@ bool GameView::restoreGame()
     return true;
 }
 
-bool GameView::saveGame()
+void GameView::saveGame()
 {
     if(pieces_.isEmpty() || pieces_.count() < EASY_PIECE_COUNT) {
-        return false;
+        return;
     }
 
     QDir dir;
@@ -417,7 +463,7 @@ bool GameView::saveGame()
 
     if(!file.open(QIODevice::WriteOnly)) {
         qDebug() << "Failed to open restore file for writing";
-        return false;
+        return;
     }
 
     QTextStream out(&file);
@@ -461,7 +507,7 @@ bool GameView::saveGame()
 
     file.close();
 
-    return true;
+    qApp->quit();
 }
 
 void GameView::closeEvent(QCloseEvent *event)
@@ -475,4 +521,30 @@ void GameView::closeEvent(QCloseEvent *event)
     }
 
     event->accept();
+}
+
+int GameView::correctPlaces() const
+{
+    int c = 0;
+
+    for(int i = 0; i < pieces_.count(); ++i) {
+        if(pieces_.at(i)->currentPlace() == pieces_.at(i)->correctPlace()) {
+            c++;
+        }
+    }
+
+    return c;
+}
+
+QList<int> GameView::movingPlaces() const
+{
+    QList<int> m;
+
+    for(int i = 0; i < pieces_.count(); ++i) {
+        if(pieces_.at(i)->movable()) {
+            m.append(i);
+        }
+    }
+
+    return m;
 }

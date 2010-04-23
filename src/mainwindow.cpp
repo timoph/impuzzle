@@ -20,10 +20,13 @@
 #include "gameview.h"
 #include "settings.h"
 #include "settingsdialog.h"
+#include "puzzleitem.h"
 
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
+
+#include <QDebug>
 
 #include "imageimporter.h"
 
@@ -39,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle(tr("ImPuzzle"));
 
     connect(GameView::instance(), SIGNAL(gameWon()), this, SLOT(gameEnded()));
+    connect(GameView::instance(), SIGNAL(gameRestored()), this, SLOT(enableSaving()));
 }
 
 void MainWindow::createMenu()
@@ -61,7 +65,7 @@ void MainWindow::createActions()
     settingsAction_ = new QAction(tr("Settings"), this);
     connect(settingsAction_, SIGNAL(triggered()), this, SLOT(settingsClicked()));
 
-    saveAction_ = new QAction(tr("Save game"), this);
+    saveAction_ = new QAction(tr("Save and quit"), this);
     connect(saveAction_, SIGNAL(triggered()), GameView::instance(), SLOT(saveGame()));
     saveAction_->setDisabled(true);
 }
@@ -73,12 +77,10 @@ void MainWindow::importClicked()
 
 void MainWindow::newGameClicked()
 {
-    //SettingsDialog dialog(this);
-    //dialog.exec();
     settingsDialog_->exec();
 
     GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
-    saveAction_->setEnabled(true);
+    enableSaving();
 }
 
 void MainWindow::settingsClicked()
@@ -90,5 +92,13 @@ void MainWindow::gameEnded()
 {
     if(saveAction_->isEnabled()) {
         saveAction_->setDisabled(true);
+        PuzzleItem::resetMoveCount();
+    }
+}
+
+void MainWindow::enableSaving()
+{
+    if(!saveAction_->isEnabled()) {
+        saveAction_->setEnabled(true);
     }
 }
