@@ -1,3 +1,10 @@
+impuzzle (0.4-2maemo0) unstable; urgency=low
+
+  * Fixes: Saving not enabled after game is restored
+  * Fixes: Improved shuffle to make game solvable
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Fri, 23 Apr 2010 21:46:00 +0200
+
 impuzzle (0.4-1maemo0) unstable; urgency=low
 
   * Implemented: Game state save and restore

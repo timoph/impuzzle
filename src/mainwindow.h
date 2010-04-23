@@ -37,6 +37,7 @@ private slots:
     void importClicked();
     void settingsClicked();
     void gameEnded();
+    void enableSaving();
 
 private:
     void createActions();

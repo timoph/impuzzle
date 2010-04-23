@@ -41,16 +41,19 @@ public slots:
     void setPieces(const QList<PuzzleItem *> pieces, bool shuffle = true);
     void shufflePieces();
     bool restoreGame();
-    bool saveGame();
+    void saveGame();
 
 signals:
     void gameWon();
+    void gameRestored();
 
 protected:
     void closeEvent(QCloseEvent *event);
 
 private:
     GameView(QWidget *parent = 0);
+    int correctPlaces() const;
+    QList<int> movingPlaces() const;
 
     static GameView *instance_;
     QGraphicsScene *scene_;
