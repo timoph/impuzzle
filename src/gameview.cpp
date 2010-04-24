@@ -51,13 +51,14 @@ GameView *GameView::instance_ = 0;
 GameView::GameView(QWidget *parent) :
         QGraphicsView(parent)
 {
+    setBackgroundBrush(Qt::black);
     qsrand(QDateTime::currentDateTime().toTime_t());
     scene_ = new QGraphicsScene;
     hiddenIndex_ = -1;
     setScene(scene_);
 
     introItem_ = new IntroItem;
-    introItem_->setText("Select new game from menu to play");
+    introItem_->setText("- ImPuzzle -");
 
     verticalStep_ = 0;
     horizontalStep_ = 0;

@@ -37,4 +37,6 @@
 #define RESTORE_FILE "impuzzle.dat"
 #define HOME_DIRECTORY ".impuzzle"
 
+#define IMPUZZLE_VERSION "0.5"
+
 #endif // DEFINES_H

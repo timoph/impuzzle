@@ -16,43 +16,23 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
 
 #include <QDialog>
 
+class QTextEdit;
 class QVBoxLayout;
-class QGroupBox;
-class QRadioButton;
-class QHBoxLayout;
-class QComboBox;
-class QLabel;
 
-class SettingsDialog : public QDialog
+class AboutDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    SettingsDialog(QWidget *parent = 0);
-
-public slots:
-    int exec();
-
-private slots:
-    void difficultySelectionChanged(bool value);
-    void imageSelectionChanged(const QString &txt);
+    AboutDialog(QWidget *parent = 0);
 
 private:
+    QTextEdit *textEdit_;
     QVBoxLayout *mainLayout_;
-    QHBoxLayout *buttonLayout_;
-
-    QRadioButton *easyButton_;
-    QRadioButton *hardButton_;
-
-    QGroupBox *buttonGroup_;
-
-    QComboBox *imageCombo_;
-
-    QLabel *selectedImageLabel_;
 };
 #endif
