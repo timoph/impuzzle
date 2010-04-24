@@ -46,6 +46,11 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     //textEdit_->setText(txt);
     textEdit_->setHtml(txt);
+    textEdit_->setReadOnly(true);
+
+#ifdef Q_WS_MAEMO_5
+    textEdit_->setProperty("FingerScrollable", true);
+#endif
 
     mainLayout_ = new QVBoxLayout;
     mainLayout_->addWidget(textEdit_);

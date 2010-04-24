@@ -1,3 +1,9 @@
+impuzzle (0.5-2maemo0) unstable; urgency=low
+
+  * Fixes: About dialog text not set read only
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sat, 24 Apr 2010 21:03:00 +0200
+
 impuzzle (0.5-1maemo0) unstable; urgency=low
 
   * Implemented: New initial view
