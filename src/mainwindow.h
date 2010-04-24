@@ -30,22 +30,26 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    static MainWindow *instance();
+
+public slots:
+    void newGameClicked();
 
 private slots:
-    void newGameClicked();
     void importClicked();
-    void settingsClicked();
+    void aboutClicked();
     void gameEnded();
     void enableSaving();
 
 private:
+    MainWindow(QWidget *parent = 0);
     void createActions();
     void createMenu();
 
+    static MainWindow *instance_;
     QAction *newGameAction_;
     QAction *importAction_;
-    QAction *settingsAction_;
+    QAction *aboutAction_;
     QAction *saveAction_;
 
     QMenu *menu_;

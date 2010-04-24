@@ -20,6 +20,7 @@
 #include "gameview.h"
 #include "settings.h"
 #include "settingsdialog.h"
+#include "aboutdialog.h"
 #include "puzzleitem.h"
 
 #include <QAction>
@@ -29,6 +30,8 @@
 #include <QDebug>
 
 #include "imageimporter.h"
+
+MainWindow *MainWindow::instance_ = 0;
 
 MainWindow::MainWindow(QWidget *parent) :
         QMainWindow(parent)
@@ -45,11 +48,21 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(GameView::instance(), SIGNAL(gameRestored()), this, SLOT(enableSaving()));
 }
 
+MainWindow *MainWindow::instance()
+{
+    if(!instance_) {
+        instance_ = new MainWindow;
+    }
+
+    return instance_;
+}
+
 void MainWindow::createMenu()
 {
     menu_ = menuBar()->addMenu("");
     menu_->addAction(newGameAction_);
     menu_->addAction(saveAction_);
+    menu_->addAction(aboutAction_);
     menu_->addAction(importAction_);
 }
 
@@ -62,8 +75,8 @@ void MainWindow::createActions()
     connect(importAction_, SIGNAL(triggered()), this, SLOT(importClicked()));
     importAction_->setDisabled(true);
 
-    settingsAction_ = new QAction(tr("Settings"), this);
-    connect(settingsAction_, SIGNAL(triggered()), this, SLOT(settingsClicked()));
+    aboutAction_ = new QAction(tr("About ImPuzzle"), this);
+    connect(aboutAction_, SIGNAL(triggered()), this, SLOT(aboutClicked()));
 
     saveAction_ = new QAction(tr("Save and quit"), this);
     connect(saveAction_, SIGNAL(triggered()), GameView::instance(), SLOT(saveGame()));
@@ -83,9 +96,11 @@ void MainWindow::newGameClicked()
     enableSaving();
 }
 
-void MainWindow::settingsClicked()
+void MainWindow::aboutClicked()
 {
-
+    AboutDialog *dialog = new AboutDialog(this);
+    dialog->exec();
+    dialog->deleteLater();
 }
 
 void MainWindow::gameEnded()

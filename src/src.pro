@@ -16,7 +16,8 @@ HEADERS += gameview.h \
     defines.h \
     introitem.h \
     settings.h \
-    settingsdialog.h
+    settingsdialog.h \
+    aboutdialog.h
 
 SOURCES += gameview.cpp \
     main.cpp \
@@ -25,7 +26,8 @@ SOURCES += gameview.cpp \
     puzzleitem.cpp \
     introitem.cpp \
     settings.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    aboutdialog.cpp
 
 RESOURCES += resources.qrc
 
