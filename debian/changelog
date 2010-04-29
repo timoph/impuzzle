@@ -1,3 +1,9 @@
+impuzzle (0.5-3maemo0) unstable; urgency=low
+
+  * Added application icon
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Thu, 29 Apr 2010 19:19:00 +0200
+
 impuzzle (0.5-2maemo0) unstable; urgency=low
 
   * Fixes: About dialog text not set read only
