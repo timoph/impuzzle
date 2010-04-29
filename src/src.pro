@@ -34,6 +34,9 @@ RESOURCES += resources.qrc
 desktop.files += impuzzle.desktop
 desktop.path = /usr/share/applications/hildon/
 
+icon.files += images/impuzzle.png
+icon.path = /usr/share/pixmaps/
+
 target.path = /opt/impuzzle/
 
-INSTALLS += target desktop
+INSTALLS += target desktop icon
