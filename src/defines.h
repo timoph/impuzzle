@@ -23,8 +23,6 @@
 
 #define IMAGE_HEIGHT 400
 
-#define GAME_VERSION 0.3
-
 #define EASY_PIECE_COUNT 9
 #define EASY_HORIZONTAL_COUNT 3
 #define HARD_PIECE_COUNT 16
@@ -37,6 +35,6 @@
 #define RESTORE_FILE "impuzzle.dat"
 #define HOME_DIRECTORY ".impuzzle"
 
-#define IMPUZZLE_VERSION "0.5"
+#define IMPUZZLE_VERSION "0.6"
 
 #endif // DEFINES_H

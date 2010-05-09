@@ -94,6 +94,7 @@ void MainWindow::newGameClicked()
 
     GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
     enableSaving();
+    PuzzleItem::setMoveCount(0);
 }
 
 void MainWindow::aboutClicked()
