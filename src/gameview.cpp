@@ -150,6 +150,7 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces, bool shuffle)
     }
 }
 
+//TODO: fixme!
 void GameView::shufflePieces()
 {
     if(pieces_.isEmpty()) {
@@ -164,7 +165,12 @@ void GameView::shufflePieces()
     QPointF topLeft = pieces_.at(0)->correctPlace();
     QPointF bottomRight = pieces_.last()->correctPlace();
 
-    for(int i = 0; i < pieces_.count() * 10; ++i) {
+    int moveCount = pieces_.count() * 10;
+    int movesMade = 0;
+
+    PuzzleItem *item = 0;
+
+    for(int i = 0; i < moveCount; ++i) {
         int rand = qrand() % 4;
 
         switch(rand) {
@@ -172,40 +178,90 @@ void GameView::shufflePieces()
         case 0:
             if(pieces_.at(hiddenIndex_)->currentPlace().y() > topLeft.y()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
-                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(0, -verticalStep_)));
-                emptyPlace_ = item->currentPlace();
-                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
-                item->setCurrentPlace(tmp);
+                item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(0, -verticalStep_)));
+                if(item->movable()) {
+                    emptyPlace_ = item->currentPlace();
+                    pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                    pieces_.at(hiddenIndex_)->setPos(item->currentPlace());
+                    item->setCurrentPlace(tmp);
+                    item->setPos(tmp);
+                    invalidateScene();
+                    scene()->update();
+                    setMovingPieces();
+                    movesMade++;
+                }
+                else {
+                    qDebug() << "Item right of hidden piece not movable";
+                }
+            }
+            else {
+                --i;
             }
             break;
         // down
         case 1:
             if(pieces_.at(hiddenIndex_)->currentPlace().y() < bottomRight.y()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
-                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(0, verticalStep_)));
+                item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(0, verticalStep_)));
+                if(item->movable()) {
                 emptyPlace_ = item->currentPlace();
-                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
-                item->setCurrentPlace(tmp);
+                    pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                    pieces_.at(hiddenIndex_)->setPos(item->currentPlace());
+                    item->setCurrentPlace(tmp);
+                    item->setPos(tmp);
+                    setMovingPieces();
+                    movesMade++;
+                }
+                else {
+                    qDebug() << "Item down of hidden piece not movable";
+                }
+            }
+            else {
+                --i;
             }
             break;
         // left
         case 2:
             if(pieces_.at(hiddenIndex_)->currentPlace().x() > topLeft.x()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
-                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(-horizontalStep_, 0)));
-                emptyPlace_ = item->currentPlace();
-                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
-                item->setCurrentPlace(tmp);
+                item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(-horizontalStep_, 0)));
+                if(item->movable()) {
+                    emptyPlace_ = item->currentPlace();
+                    pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                    pieces_.at(hiddenIndex_)->setPos(item->currentPlace());
+                    item->setCurrentPlace(tmp);
+                    item->setPos(tmp);
+                    setMovingPieces();
+                    movesMade++;
+                }
+                else {
+                    qDebug() << "Item left of hidden piece not movable";
+                }
+            }
+            else {
+                --i;
             }
             break;
         // right
         case 3:
             if(pieces_.at(hiddenIndex_)->currentPlace().x() < bottomRight.x()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
-                PuzzleItem *item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(horizontalStep_, 0)));
-                emptyPlace_ = item->currentPlace();
-                pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
-                item->setCurrentPlace(tmp);
+                item = dynamic_cast<PuzzleItem *>(scene()->itemAt(tmp + QPointF(horizontalStep_, 0)));
+                if(item->movable()) {
+                    emptyPlace_ = item->currentPlace();
+                    pieces_.at(hiddenIndex_)->setCurrentPlace(item->currentPlace());
+                    pieces_.at(hiddenIndex_)->setPos(item->currentPlace());
+                    item->setCurrentPlace(tmp);
+                    item->setPos(tmp);
+                    setMovingPieces();
+                    movesMade++;
+                }
+                else {
+                    qDebug() << "Item up of hidden piece not movable";
+                }
+            }
+            else {
+                --i;
             }
             break;
         default:
@@ -213,6 +269,8 @@ void GameView::shufflePieces()
             break;
         }
     }
+
+    qDebug() << QString("Shuffle moves: %1/%2").arg(movesMade).arg(moveCount);
 
     QParallelAnimationGroup *animationGroup = new QParallelAnimationGroup(this);
     for(int i = 0; i < pieces_.count(); ++i) {

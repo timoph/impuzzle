@@ -1,3 +1,11 @@
+impuzzle (0.6-1maemo0) unstable; urgency=low
+
+  * Fixes: Move counter not resetted when starting new game
+  * Fixes: Improved shuffle algorithm to make puzzle always solvable, for real this time :)
+  * Use random image by default
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sun, 09 May 2010 15:18:00 +0200
+
 impuzzle (0.5-3maemo0) unstable; urgency=low
 
   * Added application icon

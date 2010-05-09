@@ -53,6 +53,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     imageCombo_ = new QComboBox;
     imageCombo_->addItems(items);
+    imageCombo_->setCurrentIndex(1);
 
     selectedImageLabel_ = new QLabel(tr("n/a"));
 
@@ -66,7 +67,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     setLayout(mainLayout_);
 
     connect(easyButton_, SIGNAL(toggled(bool)), this, SLOT(difficultySelectionChanged(bool)));
-    connect(imageCombo_, SIGNAL(currentIndexChanged(QString)), this, SLOT(imageSelectionChanged(QString)));
+    //connect(imageCombo_, SIGNAL(currentIndexChanged(QString)), this, SLOT(imageSelectionChanged(QString)));
+    connect(imageCombo_, SIGNAL(activated(QString)), this, SLOT(imageSelectionChanged(QString)));
 }
 
 int SettingsDialog::exec()
