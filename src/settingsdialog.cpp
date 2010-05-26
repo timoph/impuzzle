@@ -97,6 +97,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
         qDebug() << "Random image selected";
 
         // Get random image from ~/MyDocs/.images/
+        //TODO: images from other directories
         QStringList filters;
         filters << "*.jpg" << "*.png" << "*.xpm";
 
@@ -133,7 +134,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
         }
     }
     else {
-        qDebug() << "Default image selected";
+        //qDebug() << "Default image selected";
 
         Settings::instance()->setImage(0);
         Settings::instance()->setImagePath("default");

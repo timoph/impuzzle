@@ -43,6 +43,9 @@ public slots:
     bool restoreGame();
     void saveGame();
 
+private slots:
+    void shuffleAnimationFinished();
+
 signals:
     void gameWon();
     void gameRestored();
