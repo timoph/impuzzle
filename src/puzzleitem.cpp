@@ -26,6 +26,7 @@
 #include <QFontMetrics>
 
 int PuzzleItem::moveCount_ = 0;
+bool PuzzleItem::manuallyMovable_ = false;
 
 PuzzleItem::PuzzleItem(QGraphicsItem *parent) :
         QGraphicsPixmapItem(parent)
@@ -75,7 +76,7 @@ void PuzzleItem::moveMeTo(const QPointF &location)
 
 void PuzzleItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(movable_) {
+    if(movable_ && manuallyMovable_) {
         moveMeTo(GameView::instance()->emptyPlace());
         QPointF tmp = currentPlace();
         setCurrentPlace(GameView::instance()->emptyPlace());
@@ -113,6 +114,11 @@ int PuzzleItem::moveCount()
 void PuzzleItem::resetMoveCount()
 {
     moveCount_ = 0;
+}
+
+void PuzzleItem::setManuallyMovable(const bool manuallyMovable)
+{
+    manuallyMovable_ = manuallyMovable;
 }
 
 void PuzzleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

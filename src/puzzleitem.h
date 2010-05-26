@@ -41,6 +41,7 @@ public:
     static int moveCount();
     static void setMoveCount(const int count);
     static void resetMoveCount();
+    static void setManuallyMovable(const bool manuallyMovable);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void setPieceNumber(const int pieceNumber);
     int pieceNumber() const;
@@ -57,6 +58,7 @@ private:
     bool movable_;
     QPropertyAnimation *moveAnimation_;
     static int moveCount_;
+    static bool manuallyMovable_;
     int pieceNumber_;
     bool drawNumber_;
 };

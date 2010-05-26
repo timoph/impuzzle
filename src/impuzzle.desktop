@@ -1,8 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
-Version=0.1
+Version=0.6.1
 Type=Application
-Name=ImPuzzle
+Name=impuzzle
 Icon=impuzzle
 Exec=/opt/impuzzle/impuzzle
 X-Osso-Type=application/x-executable
+Maemo-Display-Name=impuzzle
