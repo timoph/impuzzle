@@ -106,7 +106,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
 
         QStringList pics = dir.entryList(filters, QDir::Files | QDir::NoSymLinks);
 
-        qDebug() << QString("pics list contains %1 entries").arg(pics.count());
+        //qDebug() << QString("pics list contains %1 entries").arg(pics.count());
 
         if(!pics.isEmpty()) {
             QString path = QDir::homePath() + QLatin1String("/MyDocs/.images/") + pics.at(qrand() % pics.count());
@@ -114,8 +114,8 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
             Settings::instance()->setImagePath(path);
         }
         else {
-            Settings::instance()->setImage(0);
-            Settings::instance()->setImagePath("");
+            Settings::instance()->setImage(QPixmap(":/images/default.jpg"));
+            Settings::instance()->setImagePath("default");
         }
 
         if(selectedImageLabel_->isVisible()) {
@@ -123,7 +123,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
         }
     }
     else if(txt == SELECT_IMAGE_TXT) {
-        qDebug() << "Select image... selected";
+        //qDebug() << "Select image... selected";
 
         // Open file selection dialog
         QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),

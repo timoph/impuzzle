@@ -46,15 +46,15 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
     QPixmap tmp;
 
     if(pixmap.isNull()) {
-        qDebug() << "Got NULL image - using default.jpg";
+        qDebug() << "Got NULL image - using default image";
         tmp = QPixmap(":/images/default.jpg");
     }
     else {
         tmp = pixmap;
-    }
 
-    if(tmp.size().height() != IMAGE_HEIGHT || tmp.size().width() != IMAGE_WIDTH) {
-        tmp = pixmap.scaled(QSize(IMAGE_WIDTH, IMAGE_HEIGHT), Qt::KeepAspectRatioByExpanding);
+        if(tmp.size().height() != IMAGE_HEIGHT || tmp.size().width() != IMAGE_WIDTH) {
+            tmp = pixmap.scaled(QSize(IMAGE_WIDTH, IMAGE_HEIGHT), Qt::KeepAspectRatioByExpanding);
+        }
     }
 
     QList<PuzzleItem *> list;
