@@ -1,3 +1,10 @@
+impuzzle (0.6.2-1maemo0) unstable; urgency=low
+
+  * Fixes: Application crash if Mydocs/.images empty
+  * Changing default image
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sat, 29 May 2010 21:16:00 +0200
+
 impuzzle (0.6.1-1maemo0) unstable; urgency=low
 
   * Fixes: Preventing user interaction with image pieces during game setup that would lead to segfault.

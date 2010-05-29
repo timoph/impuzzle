@@ -108,9 +108,15 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
 
         qDebug() << QString("pics list contains %1 entries").arg(pics.count());
 
-        QString path = QDir::homePath() + QLatin1String("/MyDocs/.images/") + pics.at(qrand() % pics.count());
-        Settings::instance()->setImage(QPixmap(path));
-        Settings::instance()->setImagePath(path);
+        if(!pics.isEmpty()) {
+            QString path = QDir::homePath() + QLatin1String("/MyDocs/.images/") + pics.at(qrand() % pics.count());
+            Settings::instance()->setImage(QPixmap(path));
+            Settings::instance()->setImagePath(path);
+        }
+        else {
+            Settings::instance()->setImage(0);
+            Settings::instance()->setImagePath("");
+        }
 
         if(selectedImageLabel_->isVisible()) {
             selectedImageLabel_->setVisible(false);
