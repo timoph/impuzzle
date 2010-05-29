@@ -3,10 +3,7 @@ TARGET = impuzzle
 DEPENDPATH += .
 INCLUDEPATH += .
 DESTDIR = ../bin
-
-maemo5 {
-    QT += maemo5
-}
+maemo5:QT += maemo5
 
 # Input
 HEADERS += gameview.h \
@@ -18,7 +15,6 @@ HEADERS += gameview.h \
     settings.h \
     settingsdialog.h \
     aboutdialog.h
-
 SOURCES += gameview.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -28,15 +24,12 @@ SOURCES += gameview.cpp \
     settings.cpp \
     settingsdialog.cpp \
     aboutdialog.cpp
-
 RESOURCES += resources.qrc
-
 desktop.files += impuzzle.desktop
 desktop.path = /usr/share/applications/hildon/
-
 icon.files += images/impuzzle.png
 icon.path = /usr/share/pixmaps/
-
 target.path = /opt/impuzzle/
-
-INSTALLS += target desktop icon
+INSTALLS += target \
+    desktop \
+    icon
