@@ -17,6 +17,7 @@
  */
 
 #include <QApplication>
+#include <QDesktopWidget>
 
 #include "mainwindow.h"
 
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     MainWindow::instance()->show();
+    MainWindow::instance()->resize(app.desktop()->size());
 
     return app.exec();
 }

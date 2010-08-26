@@ -27,6 +27,7 @@ class QRadioButton;
 class QHBoxLayout;
 class QComboBox;
 class QLabel;
+class QPushButton;
 
 class SettingsDialog : public QDialog
 {
@@ -41,6 +42,7 @@ public slots:
 private slots:
     void difficultySelectionChanged(bool value);
     void imageSelectionChanged(const QString &txt);
+    void applyClicked();
 
 private:
     QVBoxLayout *mainLayout_;
@@ -54,5 +56,7 @@ private:
     QComboBox *imageCombo_;
 
     QLabel *selectedImageLabel_;
+
+    QPushButton *applyButton_;
 };
 #endif

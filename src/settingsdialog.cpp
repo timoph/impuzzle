@@ -57,10 +57,13 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     selectedImageLabel_ = new QLabel(tr("n/a"));
 
+    applyButton_ = new QPushButton(tr("Play"));
+
     mainLayout_ = new QVBoxLayout;
     mainLayout_->addWidget(buttonGroup_);
     mainLayout_->addWidget(imageCombo_);
     mainLayout_->addWidget(selectedImageLabel_);
+    mainLayout_->addWidget(applyButton_);
 
     selectedImageLabel_->setVisible(false);
 
@@ -69,6 +72,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     connect(easyButton_, SIGNAL(toggled(bool)), this, SLOT(difficultySelectionChanged(bool)));
     //connect(imageCombo_, SIGNAL(currentIndexChanged(QString)), this, SLOT(imageSelectionChanged(QString)));
     connect(imageCombo_, SIGNAL(activated(QString)), this, SLOT(imageSelectionChanged(QString)));
+    connect(applyButton_, SIGNAL(clicked()), this, SLOT(applyClicked()));
 }
 
 int SettingsDialog::exec()
@@ -149,4 +153,9 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
             selectedImageLabel_->setVisible(false);
         }
     }
+}
+
+void SettingsDialog::applyClicked()
+{
+    this->done(1);
 }

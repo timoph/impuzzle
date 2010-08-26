@@ -59,11 +59,13 @@ MainWindow *MainWindow::instance()
 
 void MainWindow::createMenu()
 {
-    menu_ = menuBar()->addMenu("");
+    menu_ = menuBar()->addMenu("&Game");
     menu_->addAction(newGameAction_);
     menu_->addAction(saveAction_);
-    menu_->addAction(aboutAction_);
     menu_->addAction(importAction_);
+
+    helpMenu_ = menuBar()->addMenu("&Help");
+    helpMenu_->addAction(aboutAction_);
 }
 
 void MainWindow::createActions()
@@ -90,11 +92,13 @@ void MainWindow::importClicked()
 
 void MainWindow::newGameClicked()
 {
-    settingsDialog_->exec();
+    int r = settingsDialog_->exec();
 
-    GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
-    enableSaving();
-    PuzzleItem::setMoveCount(0);
+    if(r) {
+        GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
+        enableSaving();
+        PuzzleItem::setMoveCount(0);
+    }
 }
 
 void MainWindow::aboutClicked()

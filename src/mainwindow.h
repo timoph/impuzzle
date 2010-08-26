@@ -53,6 +53,7 @@ private:
     QAction *saveAction_;
 
     QMenu *menu_;
+    QMenu *helpMenu_;
 
     SettingsDialog *settingsDialog_;
 };
