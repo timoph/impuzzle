@@ -26,6 +26,8 @@
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
+#include <QMessageBox>
+#include <QCloseEvent>
 
 #include <QDebug>
 
@@ -121,4 +123,19 @@ void MainWindow::enableSaving()
     if(!saveAction_->isEnabled()) {
         saveAction_->setEnabled(true);
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if(saveAction_->isEnabled()) {
+        int answer = QMessageBox::question(this, tr("Save game status?"),
+                                           tr("Saved status will be automatically loaded when you start the application next time"),
+                                           QMessageBox::Yes, QMessageBox::No);
+
+        if(answer == QMessageBox::Yes) {
+            GameView::instance()->saveGame();
+        }
+    }
+
+    event->accept();
 }

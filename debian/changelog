@@ -1,3 +1,10 @@
+impuzzle (0.6.3-1maemo0) unstable; urgency=low
+
+  * Show save game query when quitting if game is incomplete
+  * Changed new game dialog logic.
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Thu, 2 Sep 2010 20:38:00 +0200
+
 impuzzle (0.6.2-1maemo0) unstable; urgency=low
 
   * Fixes: Application crash if Mydocs/.images empty

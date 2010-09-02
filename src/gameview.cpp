@@ -33,7 +33,6 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
-#include <QCloseEvent>
 #include <QFileInfo>
 #include <QDateTime>
 #include <QTimer>
@@ -587,19 +586,6 @@ void GameView::saveGame()
     file.close();
 
     qApp->quit();
-}
-
-void GameView::closeEvent(QCloseEvent *event)
-{
-    int answer = QMessageBox::question(this, tr("Save game status?"),
-                                       tr("Saved status will be automatically loaded when you start the application next time"),
-                                       QMessageBox::Yes, QMessageBox::No);
-
-    if(answer == QMessageBox::Yes) {
-        saveGame();
-    }
-
-    event->accept();
 }
 
 int GameView::correctPlaces() const

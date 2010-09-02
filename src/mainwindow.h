@@ -41,6 +41,9 @@ private slots:
     void gameEnded();
     void enableSaving();
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     MainWindow(QWidget *parent = 0);
     void createActions();
