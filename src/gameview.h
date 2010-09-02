@@ -50,9 +50,6 @@ signals:
     void gameWon();
     void gameRestored();
 
-protected:
-    void closeEvent(QCloseEvent *event);
-
 private:
     GameView(QWidget *parent = 0);
     int correctPlaces() const;
