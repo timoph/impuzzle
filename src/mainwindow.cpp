@@ -22,6 +22,8 @@
 #include "settingsdialog.h"
 #include "aboutdialog.h"
 #include "puzzleitem.h"
+#include "statistics.h"
+#include "statisticsdialog.h"
 
 #include <QAction>
 #include <QMenu>
@@ -63,6 +65,7 @@ void MainWindow::createMenu()
 {
     menu_ = menuBar()->addMenu("&Game");
     menu_->addAction(newGameAction_);
+    menu_->addAction(statisticsAction_);
     menu_->addAction(saveAction_);
     menu_->addAction(importAction_);
 
@@ -85,6 +88,9 @@ void MainWindow::createActions()
     saveAction_ = new QAction(tr("Save and quit"), this);
     connect(saveAction_, SIGNAL(triggered()), GameView::instance(), SLOT(saveGame()));
     saveAction_->setDisabled(true);
+
+    statisticsAction_ = new QAction(tr("Statistics"), this);
+    connect(statisticsAction_, SIGNAL(triggered()), this, SLOT(showStatistics()));
 }
 
 void MainWindow::importClicked()
@@ -114,6 +120,9 @@ void MainWindow::gameEnded()
 {
     if(saveAction_->isEnabled()) {
         saveAction_->setDisabled(true);
+        Statistics::instance()->increaseGameCount(Settings::instance()->pieceCount() == EASY_PIECE_COUNT ? Statistics::easyDifficulty : Statistics::hardDifficulty);
+        Statistics::instance()->addNewScore(PuzzleItem::moveCount(),
+                                            Settings::instance()->pieceCount() == EASY_PIECE_COUNT ? Statistics::easyDifficulty : Statistics::hardDifficulty);
         PuzzleItem::resetMoveCount();
     }
 }
@@ -138,4 +147,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     event->accept();
+}
+
+void MainWindow::showStatistics()
+{
+    StatisticsDialog dialog(this);
+    dialog.exec();
 }
