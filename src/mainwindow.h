@@ -40,6 +40,7 @@ private slots:
     void aboutClicked();
     void gameEnded();
     void enableSaving();
+    void showStatistics();
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -54,6 +55,7 @@ private:
     QAction *importAction_;
     QAction *aboutAction_;
     QAction *saveAction_;
+    QAction *statisticsAction_;
 
     QMenu *menu_;
     QMenu *helpMenu_;

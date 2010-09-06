@@ -33,6 +33,7 @@
 #define SELECT_IMAGE_TXT "Select image..."
 
 #define RESTORE_FILE "impuzzle.dat"
+#define STATS_FILE "imstats.dat"
 #define HOME_DIRECTORY ".impuzzle"
 
 #define IMPUZZLE_VERSION "0.6"
