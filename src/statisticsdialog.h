@@ -5,6 +5,8 @@
 
 class QLabel;
 class QVBoxLayout;
+class QHBoxLayout;
+class QPushButton;
 
 class StatisticsDialog : public QDialog
 {
@@ -13,9 +15,16 @@ class StatisticsDialog : public QDialog
 public:
     StatisticsDialog(QWidget *parent = 0);
 
+private slots:
+    void updateContent();
+    void resetClicked();
+
 private:
     QLabel *label_;
+    QPushButton *resetButton_;
+    QPushButton *doneButton_;
     QVBoxLayout *mainLayout_;
+    QHBoxLayout *buttonLayout_;
 };
 
 #endif

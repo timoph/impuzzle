@@ -35,6 +35,8 @@ public slots:
 
     void saveFile();
 
+    void resetStatistics();
+
 private:
     Statistics(QObject *parent = 0);
 
