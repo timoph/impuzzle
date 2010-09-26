@@ -1,9 +1,10 @@
-impuzzle (0.6.3-1maemo0) unstable; urgency=low
+impuzzle (0.7.0-1maemo0) unstable; urgency=low
 
   * Show save game query when quitting if game is incomplete
   * Changed new game dialog logic.
+  * Added game statistics
 
- -- Timo Härkönen <timop.harkonen@gmail.com>  Thu, 2 Sep 2010 20:38:00 +0200
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Thu26 Sep 2010 15:10:00 +0200
 
 impuzzle (0.6.2-1maemo0) unstable; urgency=low
 

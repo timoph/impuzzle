@@ -6,6 +6,8 @@
 #include <QTextStream>
 #include <QStringList>
 
+#include <QDebug>
+
 Statistics *Statistics::instance_ = 0;
 
 Statistics::Statistics(QObject *parent) :
@@ -47,7 +49,7 @@ qreal Statistics::averageMoves(Difficulty difficulty) const
 {
     qreal count = 0.0;
     if(games_.at(difficulty) > 0) {
-        count = moves_.at(difficulty) / static_cast<qreal>(games_.at(difficulty));
+        count = (moves_.at(difficulty) / games_.at(difficulty));
     }
 
     return count;
@@ -66,7 +68,7 @@ int Statistics::maxMoves(Difficulty difficulty) const
 void Statistics::addNewScore(int moves, Difficulty difficulty)
 {
     if(moves_.count() >= difficulty) {
-        moves_[difficulty] += (moves_[difficulty] + moves);
+        moves_[difficulty] += moves;
     }
 
     if(maxMoves_.count() >= difficulty) {
@@ -99,6 +101,7 @@ void Statistics::readFile()
                .arg(STATS_FILE));
 
     if(!file.exists()) {
+        qDebug() << __PRETTY_FUNCTION__ << "No settings file";
         return;
     }
 
@@ -126,6 +129,15 @@ void Statistics::readFile()
 
 void Statistics::saveFile()
 {
+    QDir dir(QString("%1/%2")
+             .arg(QDir::homePath())
+             .arg(HOME_DIRECTORY));
+    if(!dir.exists()) {
+        dir.mkpath(QString("%1/%2")
+                   .arg(QDir::homePath())
+                   .arg(HOME_DIRECTORY));
+    }
+
     QFile file(QString("%1/%2/%3")
                .arg(QDir::homePath())
                .arg(HOME_DIRECTORY)
@@ -147,4 +159,19 @@ void Statistics::saveFile()
     }
 
     file.close();
+}
+
+void Statistics::resetStatistics()
+{
+    moves_.clear();
+    minMoves_.clear();
+    maxMoves_.clear();
+    games_.clear();
+
+    moves_ << 0 << 0;
+    minMoves_ << 0 << 0;
+    maxMoves_ << 0 << 0;
+    games_ << 0 << 0;
+
+    saveFile();
 }
