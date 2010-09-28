@@ -67,3 +67,13 @@ void Settings::setImagePath(const QString &path)
 {
     imagePath_ = path;
 }
+
+QStringList Settings::localImages() const
+{
+    return imageList_;
+}
+
+void Settings::setLocalImages(const QStringList &files)
+{
+    imageList_ = files;
+}

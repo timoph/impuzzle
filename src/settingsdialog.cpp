@@ -19,6 +19,7 @@
 #include "settingsdialog.h"
 #include "settings.h"
 #include "defines.h"
+#include "trackerfiles.h"
 
 #include <QRadioButton>
 #include <QPushButton>
@@ -67,12 +68,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
 
     selectedImageLabel_->setVisible(false);
 
+    trackerFiles_ = new TrackerFiles(this);
+
     setLayout(mainLayout_);
 
     connect(easyButton_, SIGNAL(toggled(bool)), this, SLOT(difficultySelectionChanged(bool)));
     //connect(imageCombo_, SIGNAL(currentIndexChanged(QString)), this, SLOT(imageSelectionChanged(QString)));
     connect(imageCombo_, SIGNAL(activated(QString)), this, SLOT(imageSelectionChanged(QString)));
     connect(applyButton_, SIGNAL(clicked()), this, SLOT(applyClicked()));
+    connect(trackerFiles_, SIGNAL(filesRead(QStringList)), this, SLOT(trackerFilesRead(QStringList)));
 }
 
 int SettingsDialog::exec()
@@ -98,32 +102,11 @@ void SettingsDialog::difficultySelectionChanged(bool value)
 void SettingsDialog::imageSelectionChanged(const QString &txt)
 {
     if(txt == RANDOM_IMAGE_TXT) {
-        qDebug() << "Random image selected";
-
-        // Get random image from ~/MyDocs/.images/
-        //TODO: images from other directories
-        QStringList filters;
-        filters << "*.jpg" << "*.png" << "*.xpm";
-
-        QDir dir(QDir::homePath() + QLatin1String("/MyDocs/.images"));
-        //dir.setNameFilters(filters);
-
-        QStringList pics = dir.entryList(filters, QDir::Files | QDir::NoSymLinks);
-
-        //qDebug() << QString("pics list contains %1 entries").arg(pics.count());
-
-        if(!pics.isEmpty()) {
-            QString path = QDir::homePath() + QLatin1String("/MyDocs/.images/") + pics.at(qrand() % pics.count());
-            Settings::instance()->setImage(QPixmap(path));
-            Settings::instance()->setImagePath(path);
+        if(Settings::instance()->localImages().isEmpty()) {
+            trackerFiles_->readFiles();
         }
         else {
-            Settings::instance()->setImage(QPixmap(":/images/default.jpg"));
-            Settings::instance()->setImagePath("default");
-        }
-
-        if(selectedImageLabel_->isVisible()) {
-            selectedImageLabel_->setVisible(false);
+            trackerFilesRead(Settings::instance()->localImages());
         }
     }
     else if(txt == SELECT_IMAGE_TXT) {
@@ -158,4 +141,26 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
 void SettingsDialog::applyClicked()
 {
     this->done(1);
+}
+
+void SettingsDialog::trackerFilesRead(const QStringList &files)
+{
+    if(!files.isEmpty()) {
+        QString path = files.at(qrand() % files.count());
+        path = path.trimmed();
+        Settings::instance()->setImage(QPixmap(path));
+        Settings::instance()->setImagePath(path);
+
+        if(Settings::instance()->localImages().isEmpty()) {
+            Settings::instance()->setLocalImages(files);
+        }
+    }
+    else {
+        Settings::instance()->setImage(QPixmap(":/images/default.jpg"));
+        Settings::instance()->setImagePath("default");
+    }
+
+    if(selectedImageLabel_->isVisible()) {
+        selectedImageLabel_->setVisible(false);
+    }
 }
