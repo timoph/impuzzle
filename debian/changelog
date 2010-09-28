@@ -1,10 +1,16 @@
+impuzzle (0.7.1-1maemo0) unstable; urgency=low
+
+  * Get available images from tracker
+
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Tue, 28 Sep 2010 19:20:00 +0200
+
 impuzzle (0.7.0-1maemo0) unstable; urgency=low
 
   * Show save game query when quitting if game is incomplete
   * Changed new game dialog logic.
   * Added game statistics
 
- -- Timo Härkönen <timop.harkonen@gmail.com>  T, 26 Sep 2010 15:10:00 +0200
+ -- Timo Härkönen <timop.harkonen@gmail.com>  Sun, 26 Sep 2010 15:10:00 +0200
 
 impuzzle (0.6.2-1maemo0) unstable; urgency=low
 
