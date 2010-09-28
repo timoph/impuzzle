@@ -28,6 +28,7 @@ class QHBoxLayout;
 class QComboBox;
 class QLabel;
 class QPushButton;
+class TrackerFiles;
 
 class SettingsDialog : public QDialog
 {
@@ -43,6 +44,7 @@ private slots:
     void difficultySelectionChanged(bool value);
     void imageSelectionChanged(const QString &txt);
     void applyClicked();
+    void trackerFilesRead(const QStringList &files);
 
 private:
     QVBoxLayout *mainLayout_;
@@ -58,5 +60,7 @@ private:
     QLabel *selectedImageLabel_;
 
     QPushButton *applyButton_;
+
+    TrackerFiles *trackerFiles_;
 };
 #endif

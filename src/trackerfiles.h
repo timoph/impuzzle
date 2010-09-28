@@ -16,39 +16,29 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef TRACKERFILES_H
+#define TRACKERFILES_H
 
 #include <QObject>
-#include <QPixmap>
+#include <QProcess>
 
-class Settings : public QObject
+class TrackerFiles : public QObject
 {
-    Q_OBJECT
-
+Q_OBJECT
 public:
-    static Settings *instance();
+    explicit TrackerFiles(QObject *parent = 0);
 
-    int pieceCount() const;
-    void setPieceCount(const int pieces);
+signals:
+    void filesRead(const QStringList &files);
 
-    QPixmap image() const;
-    void setImage(const QPixmap &image);
+public slots:
+    void readFiles();
 
-    QString imagePath() const;
-    void setImagePath(const QString &path);
-
-    QStringList localImages() const;
-    void setLocalImages(const QStringList &files);
+private slots:
+    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
-    Settings(QObject *parent = 0);
-
-    static Settings *instance_;
-
-    int pieceCount_;
-    QPixmap image_;
-    QString imagePath_;
-    QStringList imageList_;
+    QProcess *tracker_;
 };
-#endif
+
+#endif // TRACKERFILES_H

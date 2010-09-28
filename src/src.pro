@@ -16,7 +16,8 @@ HEADERS += gameview.h \
     settingsdialog.h \
     aboutdialog.h \
     statistics.h \
-    statisticsdialog.h
+    statisticsdialog.h \
+    trackerfiles.h
 SOURCES += gameview.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -27,7 +28,8 @@ SOURCES += gameview.cpp \
     settingsdialog.cpp \
     aboutdialog.cpp \
     statistics.cpp \
-    statisticsdialog.cpp
+    statisticsdialog.cpp \
+    trackerfiles.cpp
 RESOURCES += resources.qrc
 desktop.files += impuzzle.desktop
 desktop.path = /usr/share/applications/hildon/
