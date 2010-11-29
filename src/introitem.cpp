@@ -43,20 +43,20 @@ void IntroItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setPen(Qt::NoPen);
 
-    const int dots = 96;
+    //const int dots = 96;
 
-    int hstep = boundingRect().width() / dots;
-    int vstep = boundingRect().height() / dots;
+    //int hstep = boundingRect().width() / dots;
+    //int vstep = boundingRect().height() / dots;
 
-    QColor colors[3] = {QColor(255, 255, 255), QColor(0, 0, 0), QColor(127, 127, 127)};
+    //QColor colors[3] = {QColor(255, 255, 255), QColor(0, 0, 0), QColor(127, 127, 127)};
 
-    for(int i = 0; i < dots; ++i) {
+    /*for(int i = 0; i < dots; ++i) {
         for(int j = 0; j < dots; ++j) {
             painter->setBrush(QBrush(colors[qrand() % 2]));
             painter->drawRect(QRect(QPoint(i * hstep, j * vstep),
                                     QPoint((i+1) * hstep, (j+1) * vstep)));
         }
-    }
+    }*/
 
     painter->setBrush(Qt::NoBrush);
     painter->setPen(Qt::black);
