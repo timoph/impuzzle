@@ -1,3 +1,9 @@
+impuzzle (0.7.2-1maemo0) unstable; urgency=low
+
+  * Added quit without saving option
+
+ -- Timo Härkönen <timop.harkonen@gmail.com> Mon, 29 Nov 2010 20:04:00 +0200
+
 impuzzle (0.7.1-1maemo0) unstable; urgency=low
 
   * Get available images from tracker
