@@ -56,6 +56,7 @@ private:
     QAction *aboutAction_;
     QAction *saveAction_;
     QAction *statisticsAction_;
+    QAction *quitAction_;
 
     QMenu *menu_;
     QMenu *helpMenu_;

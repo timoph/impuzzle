@@ -30,6 +30,7 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QApplication>
 
 #include <QDebug>
 
@@ -67,7 +68,8 @@ void MainWindow::createMenu()
     menu_->addAction(newGameAction_);
     menu_->addAction(statisticsAction_);
     menu_->addAction(saveAction_);
-    menu_->addAction(importAction_);
+    menu_->addAction(quitAction_);
+    //menu_->addAction(importAction_);
 
     helpMenu_ = menuBar()->addMenu("&Help");
     helpMenu_->addAction(aboutAction_);
@@ -91,6 +93,9 @@ void MainWindow::createActions()
 
     statisticsAction_ = new QAction(tr("Statistics"), this);
     connect(statisticsAction_, SIGNAL(triggered()), this, SLOT(showStatistics()));
+
+    quitAction_ = new QAction(tr("Quit"), this);
+    connect(quitAction_, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
 void MainWindow::importClicked()
