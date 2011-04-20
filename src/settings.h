@@ -41,6 +41,12 @@ public:
     QStringList localImages() const;
     void setLocalImages(const QStringList &files);
 
+    static int imageWidth();
+    static void setImageWidth(int w);
+
+    static int imageHeight();
+    static void setImageHeight(int h);
+
 private:
     Settings(QObject *parent = 0);
 
@@ -48,6 +54,8 @@ private:
 
     int pieceCount_;
     QPixmap image_;
+    static int w_;
+    static int h_;
     QString imagePath_;
     QStringList imageList_;
 };

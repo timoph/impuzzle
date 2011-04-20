@@ -19,6 +19,7 @@
 #include "imageimporter.h"
 #include "puzzleitem.h"
 #include "defines.h"
+#include "settings.h"
 
 #include <QPixmap>
 
@@ -52,8 +53,8 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
     else {
         tmp = pixmap;
 
-        if(tmp.size().height() != IMAGE_HEIGHT || tmp.size().width() != IMAGE_WIDTH) {
-            tmp = pixmap.scaled(QSize(IMAGE_WIDTH, IMAGE_HEIGHT), Qt::KeepAspectRatioByExpanding);
+        if(tmp.size().height() != Settings::imageHeight() || tmp.size().width() != Settings::imageWidth()) {
+            tmp = pixmap.scaled(QSize(Settings::imageWidth(), Settings::imageHeight()), Qt::KeepAspectRatioByExpanding);
         }
     }
 
@@ -73,8 +74,8 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
     }
 
     int verticalCount = count / horizontalCount;
-    int verticalStep = IMAGE_HEIGHT / verticalCount;
-    int horizontalStep = IMAGE_WIDTH / horizontalCount;
+    int verticalStep = Settings::imageHeight() / verticalCount;
+    int horizontalStep = Settings::imageWidth() / horizontalCount;
 
     int pieceNo = 1;
 

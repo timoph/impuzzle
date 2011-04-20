@@ -127,8 +127,8 @@ void GameView::setPieces(const QList<PuzzleItem *> pieces, bool shuffle)
     }
 
     int verticalCount = pieces_.count() / horizontalCount;
-    horizontalStep_ = IMAGE_WIDTH / horizontalCount + 5;
-    verticalStep_ = IMAGE_HEIGHT / verticalCount + 5;
+    horizontalStep_ = Settings::imageWidth() / horizontalCount + 5;
+    verticalStep_ = Settings::imageHeight() / verticalCount + 5;
 
     int pieceNumber = 0;
 

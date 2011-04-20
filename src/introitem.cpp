@@ -19,6 +19,7 @@
 #include "introitem.h"
 #include "defines.h"
 #include "mainwindow.h"
+#include "settings.h"
 
 #include <QPainter>
 #include <QFontMetricsF>
@@ -31,7 +32,7 @@ IntroItem::IntroItem(QGraphicsItem *parent) :
 
 QRectF IntroItem::boundingRect() const
 {
-    return QRectF(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+    return QRectF(0, 0, Settings::imageWidth(), Settings::imageHeight());
 }
 
 void IntroItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

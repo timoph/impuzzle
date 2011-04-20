@@ -19,10 +19,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define IMAGE_WIDTH 600
-
-#define IMAGE_HEIGHT 400
-
 #define EASY_PIECE_COUNT 9
 #define EASY_HORIZONTAL_COUNT 3
 #define HARD_PIECE_COUNT 16
