@@ -20,6 +20,8 @@
 #include "defines.h"
 
 Settings *Settings::instance_ = 0;
+int Settings::w_ = 600;
+int Settings::h_ = 400;
 
 Settings::Settings(QObject *parent) :
         QObject(parent)
@@ -76,4 +78,24 @@ QStringList Settings::localImages() const
 void Settings::setLocalImages(const QStringList &files)
 {
     imageList_ = files;
+}
+
+int Settings::imageHeight()
+{
+    return h_;
+}
+
+void Settings::setImageHeight(int h)
+{
+    h_ = h;
+}
+
+int Settings::imageWidth()
+{
+    return w_;
+}
+
+void Settings::setImageWidth(int w)
+{
+    w_ = w;
 }

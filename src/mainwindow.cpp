@@ -31,6 +31,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QApplication>
+#include <QDesktopWidget>
 
 #include <QDebug>
 
@@ -108,6 +109,10 @@ void MainWindow::newGameClicked()
     int r = settingsDialog_->exec();
 
     if(r) {
+        QDesktopWidget dw;
+        QRect rect = dw.availableGeometry();
+        Settings::setImageWidth(rect.width() * 0.8);
+        Settings::setImageHeight(rect.height() * 0.8);
         GameView::instance()->setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
         enableSaving();
         PuzzleItem::setMoveCount(0);
