@@ -52,10 +52,10 @@ QList<PuzzleItem *> ImageImporter::newPieces(const QPixmap &pixmap, const int co
     }
     else {
         tmp = pixmap;
+    }
 
-        if(tmp.size().height() != Settings::imageHeight() || tmp.size().width() != Settings::imageWidth()) {
-            tmp = pixmap.scaled(QSize(Settings::imageWidth(), Settings::imageHeight()), Qt::KeepAspectRatioByExpanding);
-        }
+    if(tmp.size().height() != Settings::imageHeight() || tmp.size().width() != Settings::imageWidth()) {
+        tmp = tmp.scaled(QSize(Settings::imageWidth(), Settings::imageHeight()), Qt::KeepAspectRatioByExpanding);
     }
 
     QList<PuzzleItem *> list;
