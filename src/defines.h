@@ -32,6 +32,6 @@
 #define STATS_FILE "imstats.dat"
 #define HOME_DIRECTORY ".impuzzle"
 
-#define IMPUZZLE_VERSION "0.7"
+#define IMPUZZLE_VERSION "0.8"
 
 #endif // DEFINES_H
