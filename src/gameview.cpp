@@ -38,6 +38,7 @@
 #include <QTimer>
 #include <QApplication>
 #include <QDateTime>
+#include <QDesktopWidget>
 
 #ifdef Q_WS_MAEMO_5
 #include <QMaemo5InformationBox>
@@ -66,6 +67,10 @@ GameView::GameView(QWidget *parent) :
 
     if(QFile::exists(QString("%1/%2/%3")
                     .arg(QDir::homePath()).arg(HOME_DIRECTORY).arg(RESTORE_FILE))) {
+        QDesktopWidget dw;
+        QRect rect = dw.availableGeometry();
+        Settings::setImageWidth(rect.width() * 0.8);
+        Settings::setImageHeight(rect.height() * 0.8);
         if(!restoreGame()) {
             setPieces(ImageImporter::instance()->newPieces(Settings::instance()->image(), Settings::instance()->pieceCount()));
             PuzzleItem::setMoveCount(0);
