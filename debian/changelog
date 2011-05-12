@@ -1,3 +1,9 @@
+impuzzle (0.8.1-1maemo0) unstable; urgency=low
+
+  * Scaling game view to screen
+
+ -- Timo Härkönen <timop.harkonen@gmail.com> Thu, 12 May 2011 23:04:00 +0300
+
 impuzzle (0.7.2-1maemo0) unstable; urgency=low
 
   * Added quit without saving option
