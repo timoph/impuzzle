@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(GameView::instance(), SIGNAL(gameWon()), this, SLOT(gameEnded()));
     connect(GameView::instance(), SIGNAL(gameRestored()), this, SLOT(enableSaving()));
+
+    setWindowFlags(Qt::FramelessWindowHint);
 }
 
 MainWindow *MainWindow::instance()
