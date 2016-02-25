@@ -1,1 +1,6 @@
-impuzzle.pro.user
+impuzzle.pro.user*
+moc_*
+qrc_*
+*.o
+Makefile
+bin/impuzzle
