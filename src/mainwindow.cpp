@@ -52,10 +52,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(GameView::instance(), SIGNAL(gameWon()), this, SLOT(gameEnded()));
     connect(GameView::instance(), SIGNAL(gameRestored()), this, SLOT(enableSaving()));
-
-    #ifndef Q_WS_MAEMO_5
-    setWindowFlags(Qt::FramelessWindowHint);
-    #endif
 }
 
 MainWindow *MainWindow::instance()
