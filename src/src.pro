@@ -5,6 +5,15 @@ INCLUDEPATH += .
 DESTDIR = ../bin
 maemo5:QT += maemo5
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+	QT += core widgets
+	DEFINES += QT5BUILD
+}
+
+macx {
+	CONFIG -= app_bundle
+}
+
 # Input
 HEADERS += gameview.h \
     mainwindow.h \
@@ -31,6 +40,8 @@ SOURCES += gameview.cpp \
     statisticsdialog.cpp \
     trackerfiles.cpp
 RESOURCES += resources.qrc
+
+unix:!macx {
 desktop.files += impuzzle.desktop
 desktop.path = /usr/share/applications/hildon/
 icon.files += images/impuzzle.png
@@ -39,3 +50,4 @@ target.path = /opt/impuzzle/
 INSTALLS += target \
     desktop \
     icon
+}

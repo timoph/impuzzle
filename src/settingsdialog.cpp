@@ -129,7 +129,7 @@ void SettingsDialog::imageSelectionChanged(const QString &txt)
     else {
         //qDebug() << "Default image selected";
 
-        Settings::instance()->setImage(0);
+        Settings::instance()->setImage(QPixmap());
         Settings::instance()->setImagePath("default");
 
         if(selectedImageLabel_->isVisible()) {
