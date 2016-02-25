@@ -27,7 +27,7 @@ Settings::Settings(QObject *parent) :
         QObject(parent)
 {
     pieceCount_ = EASY_PIECE_COUNT;
-    image_ = 0;
+    image_ = QPixmap();
     imagePath_ = "";
 }
 

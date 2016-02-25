@@ -39,6 +39,9 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QDesktopWidget>
+#ifdef QT5BUILD
+#include <QTransform>
+#endif
 
 #ifdef Q_WS_MAEMO_5
 #include <QMaemo5InformationBox>
@@ -187,7 +190,11 @@ void GameView::shufflePieces()
         case 0:
             if(pieces_.at(hiddenIndex_)->currentPlace().y() > topLeft.y()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+#ifdef QT5BUILD
+                QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(0, -verticalStep_), QTransform());
+#else
                 QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(0, -verticalStep_));
+#endif
                 if(graphicsItem) {
                     item = dynamic_cast<PuzzleItem *>(graphicsItem);
                     if(item->movable()) {
@@ -214,8 +221,12 @@ void GameView::shufflePieces()
         case 1:
             if(pieces_.at(hiddenIndex_)->currentPlace().y() < bottomRight.y()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+#ifdef QT5BUILD
+                QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(0, verticalStep_), QTransform());
+#else
                 QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(0, verticalStep_));
-                if(graphicsItem) {
+#endif
+				if(graphicsItem) {
                     item = dynamic_cast<PuzzleItem *>(graphicsItem);
                     if(item->movable()) {
                     emptyPlace_ = item->currentPlace();
@@ -239,8 +250,12 @@ void GameView::shufflePieces()
         case 2:
             if(pieces_.at(hiddenIndex_)->currentPlace().x() > topLeft.x()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
+#ifdef QT5BUILD
+                QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(-horizontalStep_, 0), QTransform());
+#else
                 QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(-horizontalStep_, 0));
-                if(graphicsItem) {
+#endif
+				if(graphicsItem) {
                     item = dynamic_cast<PuzzleItem *>(graphicsItem);
                     if(item->movable()) {
                         emptyPlace_ = item->currentPlace();
@@ -264,8 +279,12 @@ void GameView::shufflePieces()
         case 3:
             if(pieces_.at(hiddenIndex_)->currentPlace().x() < bottomRight.x()) {
                 QPointF tmp = pieces_.at(hiddenIndex_)->currentPlace();
-                QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(horizontalStep_, 0));
-                if(graphicsItem) {
+#ifdef QT5BUILD
+                QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(horizontalStep_, 0), QTransform());
+#else
+                QGraphicsItem *graphicsItem = scene()->itemAt(tmp + QPointF(horizontalStep_, 0), QTransform());
+#endif
+				if(graphicsItem) {
                     item = dynamic_cast<PuzzleItem *>(graphicsItem);
                     if(item->movable()) {
                         emptyPlace_ = item->currentPlace();
@@ -432,7 +451,7 @@ bool GameView::restoreGame()
         PuzzleItem::setMoveCount(moveCount);
 
         if(im == "default" || im.isEmpty()) {
-            Settings::instance()->setImage(0);
+            Settings::instance()->setImage(QPixmap());
             Settings::instance()->setImagePath("default");
         }
         else {
