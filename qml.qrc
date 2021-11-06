@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/GameView.qml</file>
+        <file>qml/Style.qml</file>
+        <file>qml/qmldir</file>
+        <file>qml/MenuButton.qml</file>
+        <file>qml/GameMenu.qml</file>
+        <file>qml/SettingsCheckBox.qml</file>
+        <file>qml/GameOverBanner.qml</file>
+        <file>qml/ImagePicker.qml</file>
+        <file>qml/LoadingScreen.qml</file>
+        <file>qml/FireWorks.qml</file>
+    </qresource>
+</RCC>

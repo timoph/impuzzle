@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>languages/impuzzle2_en.qm</file>
+        <file>languages/impuzzle2_fi.qm</file>
+        <file>languages/impuzzle2_sv.qm</file>
+    </qresource>
+</RCC>

@@ -1,6 +1,10 @@
-impuzzle.pro.user*
-moc_*
-qrc_*
+*.pro.user*
 *.o
+*_qmlcache.qrc
+qmlcache_*.cpp
+qrc_*.cpp
+moc_*
+.qmake.stash
 Makefile
-bin/impuzzle
+qml_*.cpp
+impuzzle2
