@@ -2,7 +2,7 @@
 
 a version of 15-puzzle in which you can use your own photos as the puzzle. Originally written for the Nokia N900 phone.
 
-Orignal version tagged as "legacy\_version"
+Original version tagged as "legacy\_version"
 
 ## Compiling and running
 
