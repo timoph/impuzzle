@@ -48,6 +48,7 @@ Item {
         }
 
         Rectangle {
+            id: imageRect
             width: parent.width - parent.width / 5
             height: parent.height - parent.height / 5
             anchors.top: titleText.bottom
@@ -81,7 +82,7 @@ Item {
                         model: gameEngine.imageList
                         Image {
                             id: image
-                            width: -5 + (windowWidth - windowWidth / 5) / 4
+                            width: imageRect.width / 4
                             height: width
                             fillMode: Image.PreserveAspectCrop
                             source: modelData
