@@ -58,11 +58,11 @@ Window {
 
             onSelectPictureClicked: fileDialog.visible = true
 
-            onDrawNumbersChanged: {
+            function onDrawNumbersChanged(draw) {
                 gameView.drawPieceNumbers = draw
             }
 
-            onMorePiecesSet: {
+            function onMorePiecesSet(more) {
                 gameView.morePieces = more
             }
         }
