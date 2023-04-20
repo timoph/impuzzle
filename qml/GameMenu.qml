@@ -26,8 +26,8 @@ Item {
     implicitWidth: 420
 
     signal selectPictureClicked()
-    signal drawNumbersChanged(int draw)
-    signal morePiecesSet(int more)
+    signal drawNumbersChanged(bool draw)
+    signal morePiecesSet(bool more)
 
     property bool morePieces: false
 
@@ -123,6 +123,13 @@ Item {
             width: parent.width - currentImage.width - 10
             text: qsTr("Make it harder!")
             checked: false
+
+            Connections {
+                target: morePiecesCheck
+                onCheckedChanged: {
+                    rootItem.drawNumbersChanged(morePiecesCheck.checked)
+                }
+            }
         }
     }
 }
