@@ -22,7 +22,7 @@ import "."
 
 Item {
     id: rootItem
-    implicitHeight: 290
+    implicitHeight: 370
     implicitWidth: 420
 
     signal selectPictureClicked()
@@ -130,6 +130,17 @@ Item {
                     rootItem.drawNumbersChanged(morePiecesCheck.checked)
                 }
             }
+        }
+
+        MenuButton {
+            id: quitButton
+            anchors.top: currentImage.bottom
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width - 20
+            text: qsTr("Quit")
+
+            onClicked: Qt.quit()
         }
     }
 }
