@@ -1,6 +1,6 @@
 /*
  ImPuzzle 2 - a 15-puzzle inspired game
- Copyright (C) 2021 Timo Härkönen
+ Copyright (C) 2023 Timo Rautiainen
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion(QString(APP_VERSION));
 
     QCommandLineParser cmdParser;
-    QString appDesc = QString("%1%2%3%4%5").arg("ImPuzzle 2  Copyright (C) 2021  Timo Härkönen\n")
+    QString appDesc = QString("%1%2%3%4%5").arg("ImPuzzle 2  Copyright (C) 2023  Timo Rautiainen\n")
             .arg("This program comes with ABSOLUTELY NO WARRANTY\n")
             .arg("This is free software, and you are welcome\n")
             .arg("to redistribute it under certain conditions\n")
