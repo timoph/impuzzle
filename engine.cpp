@@ -164,11 +164,15 @@ void Engine::findImages()
             tmpLocation = di.next();
             tmpImage.load(tmpLocation);
             if(tmpImage.width() > 300 && tmpImage.height() > 200 && tmpLocation != "") {
-                m_imageList << "file:" + tmpLocation;
+                QString fileString = "file:" + tmpLocation;
+                if(!m_imageList.contains(fileString)) {
+                    m_imageList << fileString;
+                }
             }
             if(m_imageList.count() > 30) break;
         }
     }
+
     emit imageListChanged();
 }
 
