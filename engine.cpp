@@ -182,40 +182,30 @@ bool Engine::pieceCanMove(int index) const
      0 1 2
      3 4 5
      6 7 8
-     */
+     */    
+    
+    if (m_itemList.count() == EASY_PIECE_COUNT) {
+        static const std::unordered_map<int, std::vector<int>> validMoves = {
+            {0, {1, 3}},
+            {1, {0, 2, 4}},
+            {2, {1, 5}},
+            {3, {0, 4, 6}},
+            {4, {1, 3, 5, 7}},
+            {5, {2, 4, 8}},
+            {6, {3, 7}},
+            {7, {4, 6, 8}},
+            {8, {5, 7}}
+        };
 
-    if(m_itemList.count() == 9) {
-        switch (index) {
-        case 0: if(PuzzleItem::hiddenIndex() == 1  || PuzzleItem::hiddenIndex() == 3) return true;
-            else return false;
-            break;
-        case 1: if(PuzzleItem::hiddenIndex() == 0  || PuzzleItem::hiddenIndex() == 2 || PuzzleItem::hiddenIndex() == 4) return true;
-            else return false;
-            break;
-        case 2: if(PuzzleItem::hiddenIndex() == 1  || PuzzleItem::hiddenIndex() == 5) return true;
-            else return false;
-            break;
-        case 3: if(PuzzleItem::hiddenIndex() == 0  || PuzzleItem::hiddenIndex() == 4 || PuzzleItem::hiddenIndex() == 6) return true;
-            else return false;
-            break;
-        case 4: if(PuzzleItem::hiddenIndex() == 1  || PuzzleItem::hiddenIndex() == 3 || PuzzleItem::hiddenIndex() == 5 || PuzzleItem::hiddenIndex() == 7) return true;
-            else return false;
-            break;
-        case 5: if(PuzzleItem::hiddenIndex() == 2  || PuzzleItem::hiddenIndex() == 4 || PuzzleItem::hiddenIndex() == 8) return true;
-            else return false;
-            break;
-        case 6: if(PuzzleItem::hiddenIndex() == 3  || PuzzleItem::hiddenIndex() == 7) return true;
-            else return false;
-            break;
-        case 7: if(PuzzleItem::hiddenIndex() == 6  || PuzzleItem::hiddenIndex() == 4 || PuzzleItem::hiddenIndex() == 8) return true;
-            else return false;
-            break;
-        case 8: if(PuzzleItem::hiddenIndex() == 5  || PuzzleItem::hiddenIndex() == 7) return true;
-            else return false;
-            break;
-        default:
-            return false;
+        auto it = validMoves.find(index);
+        if (it != validMoves.end()) {
+            for (int move : it->second) {
+                if (PuzzleItem::hiddenIndex() == move) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     /*
@@ -225,59 +215,35 @@ bool Engine::pieceCanMove(int index) const
      12 13 14 15
      */
 
-    else if(m_itemList.count() == 16) {
-        switch (index) {
-        case 0: if(PuzzleItem::hiddenIndex() == 1 || PuzzleItem::hiddenIndex() == 4) return true;
-            else return false;
-            break;
-        case 1: if(PuzzleItem::hiddenIndex() == 0 || PuzzleItem::hiddenIndex() == 2 || PuzzleItem::hiddenIndex() == 5) return true;
-            else return false;
-            break;
-        case 2: if(PuzzleItem::hiddenIndex() == 1 || PuzzleItem::hiddenIndex() == 3 || PuzzleItem::hiddenIndex() == 6) return true;
-            else return false;
-            break;
-        case 3: if(PuzzleItem::hiddenIndex() == 2 || PuzzleItem::hiddenIndex() == 7) return true;
-            else return false;
-            break;
-        case 4: if(PuzzleItem::hiddenIndex() == 0 || PuzzleItem::hiddenIndex() == 5 || PuzzleItem::hiddenIndex() == 8) return true;
-            else return false;
-            break;
-        case 5: if(PuzzleItem::hiddenIndex() == 1 || PuzzleItem::hiddenIndex() == 4 || PuzzleItem::hiddenIndex() == 6 || PuzzleItem::hiddenIndex() == 9) return true;
-            else return false;
-            break;
-        case 6: if(PuzzleItem::hiddenIndex() == 2 || PuzzleItem::hiddenIndex() == 5 || PuzzleItem::hiddenIndex() == 7 || PuzzleItem::hiddenIndex() == 10) return true;
-            else return false;
-            break;
-        case 7: if(PuzzleItem::hiddenIndex() == 3 || PuzzleItem::hiddenIndex() == 6 || PuzzleItem::hiddenIndex() == 11) return true;
-            else return false;
-            break;
-        case 8: if(PuzzleItem::hiddenIndex() == 4 || PuzzleItem::hiddenIndex() == 9 || PuzzleItem::hiddenIndex() == 12) return true;
-            else return false;
-            break;
-        case 9: if(PuzzleItem::hiddenIndex() == 5 || PuzzleItem::hiddenIndex() == 8 || PuzzleItem::hiddenIndex() == 10 || PuzzleItem::hiddenIndex() == 13) return true;
-            else return false;
-            break;
-        case 10: if(PuzzleItem::hiddenIndex() == 6 || PuzzleItem::hiddenIndex() == 9 || PuzzleItem::hiddenIndex() == 11 || PuzzleItem::hiddenIndex() == 14) return true;
-            else return false;
-            break;
-        case 11: if(PuzzleItem::hiddenIndex() == 7 || PuzzleItem::hiddenIndex() == 10 || PuzzleItem::hiddenIndex() == 15) return true;
-            else return false;
-            break;
-        case 12: if(PuzzleItem::hiddenIndex() == 8 || PuzzleItem::hiddenIndex() == 13) return true;
-            else return false;
-            break;
-        case 13: if(PuzzleItem::hiddenIndex() == 9 || PuzzleItem::hiddenIndex() == 12 || PuzzleItem::hiddenIndex() == 14) return true;
-            else return false;
-            break;
-        case 14: if(PuzzleItem::hiddenIndex() == 13 || PuzzleItem::hiddenIndex() == 10 || PuzzleItem::hiddenIndex() == 15) return true;
-            else return false;
-            break;
-        case 15: if(PuzzleItem::hiddenIndex() == 11 || PuzzleItem::hiddenIndex() == 14) return true;
-            else return false;
-            break;
-        default:
-            return false;
+    else if (m_itemList.count() == HARD_PIECE_COUNT) {
+        static const std::unordered_map<int, std::vector<int>> validBiggerGameMoves = {
+            {0, {1, 4}},
+            {1, {0, 2, 5}},
+            {2, {1, 3, 6}},
+            {3, {2, 7}},
+            {4, {0, 5, 8}},
+            {5, {1, 4, 6, 9}},
+            {6, {2, 5, 7, 10}},
+            {7, {3, 6, 11}},
+            {8, {4, 9, 12}},
+            {9, {5, 8, 10, 13}},
+            {10, {6, 9, 11, 14}},
+            {11, {7, 10, 15}},
+            {12, {8, 13}},
+            {13, {9, 12, 14}},
+            {14, {10, 13, 15}},
+            {15, {11, 14}}
+        };
+
+        auto it = validBiggerGameMoves.find(index);
+        if (it != validBiggerGameMoves.end()) {
+            for (int move : it->second) {
+                if (PuzzleItem::hiddenIndex() == move) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     return false;

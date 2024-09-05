@@ -8,3 +8,5 @@ moc_*
 Makefile
 qml_*.cpp
 impuzzle2
+build
+.vscode

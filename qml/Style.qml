@@ -27,8 +27,8 @@ Item {
     readonly property string highlightColor: "#800080"
     readonly property string buttonColor: "#555555"
     readonly property string buttonBorderColor: "#000000"
-    readonly property string buttonTextColor: "#FFFFFF"
-    readonly property string menuTextColor: "#FFFFFF"
+    readonly property string buttonTextColor: "#EEEEEE"
+    readonly property string menuTextColor: "#EEEEEE"
     readonly property string menuBorderColor: "#800080"
     readonly property string introTextColor: "#800080"
 }
