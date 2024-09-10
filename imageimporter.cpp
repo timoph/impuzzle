@@ -43,42 +43,25 @@ ImageImporter *ImageImporter::instance()
 
 QList<QPixmap> ImageImporter::newPieces(const QPixmap &pixmap, const int count)
 {
-    QPixmap tmp;
-
-    if(pixmap.isNull()) {
-        qDebug() << "using default image";
-        tmp = QPixmap(":/images/default.jpg");
-    }
-    else {
-        tmp = pixmap;
-    }
+    QPixmap tmp = pixmap.isNull() ? QPixmap(":/images/default.jpg") : pixmap;
 
     QList<QPixmap> list;
 
     int horizontalCount = 0;
+    horizontalCount = count == EASY_PIECE_COUNT ? EASY_HORIZONTAL_COUNT : HARD_HORIZONTAL_COUNT;
 
-    if(count == EASY_PIECE_COUNT) {
-        horizontalCount = EASY_HORIZONTAL_COUNT;
-    }
-    else if(count == HARD_PIECE_COUNT) {
-        horizontalCount = HARD_HORIZONTAL_COUNT;
-    }
-    else {
-        qDebug() << QString("Bad piece count ( %1 ) @ ImageImporter::newPieces").arg(count);
-        return list;
-    }
+    const int verticalCount = count / horizontalCount;
+    const int verticalStep = tmp.height() / verticalCount;
+    const int horizontalStep = tmp.width() / horizontalCount;
 
-    int verticalCount = count / horizontalCount;
-    int verticalStep = tmp.height() / verticalCount;
-    int horizontalStep = tmp.width() / horizontalCount;
+    list.reserve(verticalCount * horizontalCount);
 
     for(int i = 0; i < verticalCount; ++i) {
         for(int j = 0; j < horizontalCount; ++j) {
-            QPixmap item;
-            item = tmp.copy(QRect(QPoint(j * horizontalStep, i * verticalStep),
-                                           QPoint(horizontalStep + j * horizontalStep, verticalStep + i * verticalStep)));
+            QPixmap item = tmp.copy(QRect(QPoint(j * horizontalStep, i * verticalStep),
+                                          QPoint(horizontalStep + j * horizontalStep, verticalStep + i * verticalStep)));
 
-            list.append(item);
+            list.append(std::move(item));
         }
     }
 

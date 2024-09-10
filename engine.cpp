@@ -156,20 +156,19 @@ void Engine::findImages()
 
     m_imageList << "qrc:/images/default.jpg";
 
-    foreach (QString directory, directories) {
+    for (const QString& directory : directories) {
         QDirIterator di(directory, nameFilters, filters, flags);
         QString tmpLocation;
         QImage tmpImage;
-        while(di.hasNext()) {
+        while (di.hasNext() && m_imageList.count() <= 30) {
             tmpLocation = di.next();
             tmpImage.load(tmpLocation);
-            if(tmpImage.width() > 300 && tmpImage.height() > 200 && tmpLocation != "") {
+            if (tmpImage.width() > 300 && tmpImage.height() > 200 && !tmpLocation.isEmpty()) {
                 QString fileString = "file:" + tmpLocation;
-                if(!m_imageList.contains(fileString)) {
-                    m_imageList << fileString;
+                if (!m_imageList.contains(fileString)) {
+                    m_imageList.append(fileString);
                 }
             }
-            if(m_imageList.count() > 30) break;
         }
     }
 
