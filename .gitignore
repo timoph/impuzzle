@@ -10,3 +10,4 @@ qml_*.cpp
 impuzzle2
 build
 .vscode
+CMakeLists.txt.user*
